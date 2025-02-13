@@ -90,10 +90,8 @@ Returning this data when queried has only limited use.
 It represents a measurement of the current situation.
 The caller is more interested what happened since the last query.
 Two different implementations for the read of the gyroscope were used during the experimental phase of this thesis.
-One would try to return the current orientation of the tag. This read will be called the orientational read.
- while the other would return the maximal registered angular velocity since the last read.
-
-
+One would try to return the current orientation of the tag. This read will be called the \textit{orientational read}.
+The other would return the maximal registered angular velocity since the last read. This will be called the \textit{angular velocity read}.
 
 
 \begin{figure}[ht!]
@@ -102,6 +100,27 @@ One would try to return the current orientation of the tag. This read will be ca
 \caption{Schematic view of the MPU6050, showing the direction of the three axis X,Y,Z.}
 \label{f:MPU6050_orientation}
 \end{figure}
+
+
+
+To achieve the orientational read, three orientational variables $x_{angle}$, $y_{angle}$ and $z_{angle}$ keep track of the current rotation around their corresponding axes.
+During setup, all three angles are set to zero.
+The MPU6050 is read out periodically in between calls.
+The elapsed time since the last read is multiplied with the angular velocity at this moment arround the axis and is added to the orientational variables.
+When the gyroscope module is queried for its measurement, $x_{angle}$, $y_{angle}$ and $z_{angle}$ are returned.
+
+
+The angualr velocity read is achieved in a similar manner.
+Three angular velocity variables $x_{max}$, $y_{max}$ and $z_{max}$ are created and set to zero during initiation.
+The MPU6050 is read out periodically and its values are compared to the angular velocity variables.
+If any of the angular velocity values is smaller in absolute magnitude than the corresponding read value, it is replaced by that read value.
+When the the gyroscope module is queried, the values of $x_{max}$, $y_{max}$ and $z_{max}$ are returned.
+The angular velocity variables $x_{max}$, $y_{max}$ and $z_{max}$ are then set to zero again.
+
+
+\section{Two way ranging}
+\label{ss:two_way_ranging}
+
 
 
 \section{Combining modules}
