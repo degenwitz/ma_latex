@@ -1,0 +1,75 @@
+\chapter{Introduction}
+
+Research questions:
+\begin{itemize}
+  \item What are the advantages and disadvantages to using UWB over BLE for fast network communication.
+  \item Can I build a system of sensors that detectes disturbances in transportation and alerts the user.
+  \item What is the most adequate network topology to be used in such a system.
+\end{itemize}
+
+\section{Motivation}
+
+Certify is an international cooperative project between twelve partners situated in Switzerland and the EU %\citep{Brüschre von certify}.
+One of those partners is the university of zurich.
+Its focus is on the development of Internet of Things (IoT) systems for security, monitoring and detection %\citep{Brüschüre von certify}.
+Next to certifications and the development of frameworks, Certify also consirnes itself with the integration of IoT devices.
+
+
+One of multiple currently running pilots of Certify is the "Tracking and monitoring of artworks" %\citep{https://certify-project.eu/pilots/}.
+The goal of this pilot is to enable the constant tracking and monitoring of artworks by attaching a device to it.
+This device allows for unique identification, by using cryptographic methods.
+It is also intended to act as a cluster of sensors that collect information about the surounding of the artwork that are relevant to the wellbeeing of the artwork.
+The goal is to have constant data on the artwork throughout its lifecycle.
+This is intended to help with securing the artwork and helping with chain of custody monitoring.
+
+
+
+\section{Thesis Goals}
+
+The goal of this project is to develop a system that implements a localized version of the artwork tracking envisioned by the Certify project, ment for transportation in a truck.
+Additionally the system will extend the Certify Projects goal by adding new detection methods and also informs the driver of the truck about potential problems.
+
+The goal is to develop a system that tracks the state of artwork in a truck using different detection methods.
+The devices attached to the artworks, called tags, build a local decentralized network.
+The phone of the driver can query the network and displayed the collected metrics to them.
+If a metric is outside of the accepted norm, the system should allert the driver.
+
+This thesis presents a proof of concept implementation.
+The used metrics are not intended to be a full representation of needed sensors to securley Transport art.
+Rather they are intended to show different types of sensors that can be used.
+This thesis assumes that the data transfer to a server using 4G, as planned by the Certify project, will work and will not implement it in this thesis.
+
+
+
+\section{Methodology}
+
+This Thesis was made in four stages:
+
+\subsubsection{Reserach}
+In a first step, the basis of the thesis had to be researched.
+This involved familiarizing with existing research on the toping of artwork tracking, local IoT networks and commonly used communication protocols.
+Existing artwork tracking methods need to be analyzed and evaluated, considering their strength and shortcommings during the transportation in a truck.
+The types of sensors that could be relevant need to be chosen, based on existing research, cost and avaliablity.
+Options for the network-architecture inside the truck needed to be researched and compared, based on performance, stability and security.
+A communication protocol needed to be chosen, based on the same criterias.
+
+\subsubsection{Design}
+Once the fundamental knowledge for the project had been aquired, the system had to be designed.
+The design was chosen based on feasability, security and stability.
+
+\subsubsection{Implementation}
+The desig then was implemented in a simplified manner based on the material that was avaliable.
+For this four tags were build, equiped with sensors, communication-capabilities and power suply.
+Then the required software was written, using existing implementations when possible and writing new code when required.
+A simple example app was also developed, based on an existing communications app published by Nordic Semiconductors and installed on a phone.
+
+\subsubsection{Evaluation}
+The developed system of tags and phone was tested in a series of five experiments.
+The first four experiments were intended to caputre a specific part of the system, while the last was a general purpose test.
+The tests were performed in a manner that insured minimal external influence.
+The resulting data from the testswere analyzed using statistical methods.
+The goal was to determin the reliability of the system, find limitations and look for emprovements.
+
+\section{Thesis Outline}
+
+

@@ -11,6 +11,9 @@
 *.cb
 *.cb2
 .*.lb
+thesis.pdf
+*.gz
+
 
 ## Intermediate documents:
 *.dvi
