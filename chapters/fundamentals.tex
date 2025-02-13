@@ -314,8 +314,67 @@ In both instances, the distance measurement is done by calculating the time of f
 In this section both SS-TWR and DS-TWR will be discussed.
 In all other parts of the thesis,two-way ranging(TWR) refers to DS-TWR.
 
+\textbf{Single-sided two-way ranging (SS-TWR)}:
+During  SS-TWR, one device sends a message to a second and measures the round-trip time (see figure \ref{f:ss_twr}).
+Device A sends a message to B and records a timestamp when the message was sent, $T_{A0}$.
+When device B receives the respondes, it also records a timestamp, $T_{B0}$.
+After some delay device B will send a response to A, that contains $T_{B0}$ and the current timestamp $T_{B1}$.
+Device A on receiving the response records its timestamp, $T_{A1}$.
+The round trip time $T_{round}$ can now be calculated using the timestamps from A:
+\begin{equation}
+	\mbox{$T_{round}$} =
+	\mbox{$T_{A1} - T_{A0}$}
+\end{equation}
+The reply delay $T_{reply}$ is calculated using the timestamps from B:
+\begin{equation}
+	\mbox{$T_{reply}$} =
+	\mbox{$T_{B1} - T_{B0}$}
+\end{equation}
+
+The ToF can be calculated by subtracting these values.
+Since the messages was send the same distance twice, the ToF needs to be halved before multiplying it with the speed of light, to get the distance.
+\begin{equation}
+	\mbox{$distance$} =
+	\mbox{$(\frac{1}{2}\cdot T_{round}-T_{reply}) \cdot c_{air}$}
+\end{equation}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{graphics/schematics/SingleSidedTwoWayRanging.png}
+\caption{timeline of singe-sided two-way ranging (SS-TWR)\cite{IEEE4z}}
+\label{f:ss_twr}
+\end{figure}
+
+\textbf{Double-sided two-way ranging (DS-TWR)}:
+In DS-TWR involves both device A and B performing a SS-TWR and calculating the average between the results.
+Figure \ref{f:ds_twr} shows the two seperate ranging sessions.
+Their result can then be combined to the average ToF for a single message:
+\begin{equation}
+	\mbox{$T_{prop}$} =
+	\mbox{$\frac {T_{Round1}\cdot T_{Round2}-T_{Reply1}\cdot T_{Reply2}}{T_{Round1}+T_{Round2}+T_{Reply1}+T_{Reply2}}$}
+\end{equation}
+\begin{equation}
+	\mbox{$distance$} =
+	\mbox{$T_{prop} \cdot c_{air}$}
+\end{equation}
+
+The two ranging sessions can have one message overlapping.
+Figure \ref{f:ds_twr_3}} shows the timeline of an overlapping DS-TWR that only requires three messages.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{graphics/schematics/TwoSidedRangingThreeMessages.PNG}
+\caption{timeline of singe-sided two-way ranging (SS-TWR) with three messages\cite{IEEE4z}}
+\label{f:ds_twr_3}
+\end{figure}
 
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{graphics/schematics/TwoSidedTwoWayRanging.PNG}
+\caption{timeline of double-sided two-way ranging (DS-TWR)\cite{IEEE4z}}
+\label{f:ds_twr}
+\end{figure}
 
 \section{Related Work} % application of concepts
 
