@@ -10,10 +10,10 @@ In Section \ref{ss:network} the network topology and data-flow is discueed
 
 This sectiondescribes the hardware used in the project. The setup consists of two distinct components: the artwork-tags, of which there are four, and one Phone that provides the interface to the user. The tag itself consists of 4 components:
 \begin{enumerate}
-    \item nRF52840 Microcontroler
-    \item DWM3000 UWB Shield
-    \item DHT22 temperature and humidity sensor
-    \item MPU6050 accelerometer and gyroscope
+	\item nRF52840 Microcontroler
+	\item DWM3000 UWB Shield
+	\item DHT22 temperature and humidity sensor
+	\item MPU6050 accelerometer and gyroscope
 \end{enumerate}
 
 \subsubsection{Microcontroler}
@@ -41,8 +41,8 @@ The SDK uses the Serial Peripheral Interface (SPI) for communication between the
 
 For humidity and temperature sensors I decided to use the DHT22(AM2302) produced by Guangzhou Aosong Electronic Co. \cite{AM2302}. 
 It is a comonly used sensor in IoT monitoring systems \cite{ahmad2021evaluation}. 
-The vendor claims a temperature range from -40° to 80° Celsius with a precision of 0.5°. 
-\cite{ahmad2021evaluation} could experimentaly confirm that errors did not exceed 0.1°Celsius. 
+The vendor claims a temperature range from -40\degree to 80\degree Celsius with a precision of 0.5\degree. 
+\cite{ahmad2021evaluation} could experimentaly confirm that errors did not exceed 0.1\degree Celsius. 
 They also concluded that the sensor is slow in detecting temperature change. 
 This is also confrimed by the user manual \cite{AM2302}, that states a read-interval of less than 2s is not possible. 
 
@@ -114,88 +114,88 @@ Since it is not visible which pins the shield leaves free, I decided to use data
 Table \ref{table:otherPins} shows how the sensors are connected to the remaining open pins.
 
 \begin{table}[]
- \centering
- \caption{Adruino compatible pin assignment}
- \label{table:ArdruinoPins}
-\begin{tabular}{l|l|l|l|l|}
- & Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
-\hline \multicolumn{1}{|l|}{\multirow{10}{*}{\rotatebox{90}{P4}}}
-                       & P1.10  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.11  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.12  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.13  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.14  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.15  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P0.02  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.26  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P0.27  &               &             &             \\
-\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P3}}}
-                       & P1.01  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.02  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.03  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.04  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.05  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.06  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.07  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.08  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P1.10  & \checkmark    &             &             \\
-\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P1}}}
-                       & VDD    &               &             &             \\
-\multicolumn{1}{|l|}{} & VDD    &               &             &             \\
-\multicolumn{1}{|l|}{} & RESET  &               &             &             \\
-\multicolumn{1}{|l|}{} & VDD    & \checkmark    & \checkmark  &             \\
-\multicolumn{1}{|l|}{} & 5V     & \checkmark    &             & \checkmark  \\
-\multicolumn{1}{|l|}{} & GND    & \checkmark    & \checkmark  & \checkmark  \\
-\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & N.C.   &               &             &             \\
-\hline \multicolumn{1}{|l|}{\multirow{6}{*}{\rotatebox{90}{P2}}}
-                       & P0.03  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P0.04  & \checkmark    &             &             \\
-\multicolumn{1}{|l|}{} & P0.28  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.29  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.30  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.31  &               &             &             \\
-\hline 
-\end{tabular}
+	\centering
+	\caption{Adruino compatible pin assignment}
+	\label{table:ArdruinoPins}
+	\begin{tabular}{l|l|l|l|l|}
+		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
+		\hline \multicolumn{1}{|l|}{\multirow{10}{*}{\rotatebox{90}{P4}}}
+		& P1.10  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.11  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.12  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.13  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.14  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.15  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P0.02  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.26  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P0.27  &               &             &             \\
+		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P3}}}
+		& P1.01  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.02  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.03  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.04  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.05  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.06  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.07  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.08  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P1.10  & \checkmark    &             &             \\
+		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P1}}}
+		& VDD    &               &             &             \\
+		\multicolumn{1}{|l|}{} & VDD    &               &             &             \\
+		\multicolumn{1}{|l|}{} & RESET  &               &             &             \\
+		\multicolumn{1}{|l|}{} & VDD    & \checkmark    & \checkmark  &             \\
+		\multicolumn{1}{|l|}{} & 5V     & \checkmark    &             & \checkmark  \\
+		\multicolumn{1}{|l|}{} & GND    & \checkmark    & \checkmark  & \checkmark  \\
+		\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & N.C.   &               &             &             \\
+		\hline \multicolumn{1}{|l|}{\multirow{6}{*}{\rotatebox{90}{P2}}}
+		& P0.03  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P0.04  & \checkmark    &             &             \\
+		\multicolumn{1}{|l|}{} & P0.28  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.29  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.30  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.31  &               &             &             \\
+		\hline 
+	\end{tabular}
 \end{table}
 
 \begin{table}[]
- \centering
- \caption{Non-Adruino compatible pin assignment}
- \label{table:otherPins}
-\begin{tabular}{l|l|l|l|l|}
- & Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
-\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P6}}} 
-                       & P0.00  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.01  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.05  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.06  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.07  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.08  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.09  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.10  &               &             &             \\
-\hline \multicolumn{1}{|l|}{\multirow{18}{*}{\rotatebox{90}{P24}}} 
-                       & P0.11  &               &             & \checkmark  \\
-\multicolumn{1}{|l|}{} & P0.12  &               &             & \checkmark  \\
-\multicolumn{1}{|l|}{} & P0.13  &               & \checkmark  &             \\
-\multicolumn{1}{|l|}{} & P0.14  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.15  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.16  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.17  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.18  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.19  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.20  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.21  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.22  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.23  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.24  &               &             &             \\
-\multicolumn{1}{|l|}{} & P0.25  &               &             &             \\
-\multicolumn{1}{|l|}{} & P1.00  &               &             &             \\
-\multicolumn{1}{|l|}{} & P1.09  &               &             &             \\
-\multicolumn{1}{|l|}{} & GND    &               &             &             \\
-\hline
-\end{tabular}
+	\centering
+	\caption{Non-Adruino compatible pin assignment}
+	\label{table:otherPins}
+	\begin{tabular}{l|l|l|l|l|}
+		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
+		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P6}}} 
+		& P0.00  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.01  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.05  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.06  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.07  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.08  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.09  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.10  &               &             &             \\
+		\hline \multicolumn{1}{|l|}{\multirow{18}{*}{\rotatebox{90}{P24}}} 
+		& P0.11  &               &             & \checkmark  \\
+		\multicolumn{1}{|l|}{} & P0.12  &               &             & \checkmark  \\
+		\multicolumn{1}{|l|}{} & P0.13  &               & \checkmark  &             \\
+		\multicolumn{1}{|l|}{} & P0.14  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.15  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.16  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.17  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.18  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.19  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.20  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.21  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.22  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.23  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.24  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P0.25  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P1.00  &               &             &             \\
+		\multicolumn{1}{|l|}{} & P1.09  &               &             &             \\
+		\multicolumn{1}{|l|}{} & GND    &               &             &             \\
+		\hline
+	\end{tabular}
 \end{table}
 
 
@@ -249,20 +249,20 @@ This again was not added, since it is not part of this thesis.
 \label{ss:dataflow}
 
 \begin{figure}[ht!]
-\includegraphics[width=\linewidth]{graphics/schematics/obervation_loop.png}
- \caption{Sequence diagram of setup and oberservation loop. Setup is berformed one, oberservation loop repeats until stopped.}
-\label{f:observation_loop}
+	\includegraphics[width=\linewidth]{graphics/schematics/obervation_loop.png}
+	\caption{Sequence diagram of setup and oberservation loop. Setup is berformed one, oberservation loop repeats until stopped.}
+	\label{f:observation_loop}
 \end{figure}
 
 How a tag connects to the network is described in the section \ref{s:network}.
 Figure \ref{f:observation_loop} shows a sequece diagram ob the setup and main observation loop of the system.
 On the top the communicating parts are listed.
 \begin{itemize}
- \item Human is the driver of the truck
- \item Phone is the phone used by the Human
- \item Network consists of all the tags that are used and the network they build.
- \item Connected Tag is part of this network, but is listed seperatly. It represents the tag that is communicating to the phone
- \item Tag j is also part of the Netowrk. It represents the tag that is queried during the observation loop
+	\item Human is the driver of the truck
+	\item Phone is the phone used by the Human
+	\item Network consists of all the tags that are used and the network they build.
+	\item Connected Tag is part of this network, but is listed seperatly. It represents the tag that is communicating to the phone
+	\item Tag j is also part of the Netowrk. It represents the tag that is queried during the observation loop
 \end{itemize}
 Phone and Human communicate by using a GUI. Phone and Connected Tag commuincate using BLE. Every communication inside the network happens using UWB. This includes the communication between the Connected Tag, the network and Tag j. \\
 When the phone wants to connect to the network, it looks for advertised BLE devices.
@@ -271,9 +271,9 @@ The phone then pairs to the chosen tag, making it the connected tag and the phon
 Once connected to the network, the phone will promt the human to enter the parameters.
 These consist of:
 \begin{itemize}
- \item Upper and lower limit for sensor data, like temperature and humidity
- \item Maximal displacement value for distance and gyro. These values represent the maximal difference in registered values that is allowed for positional measurements.
- \item Time between measurements. This gives the time period that will pass between measurements for each device and measurement type.
+	\item Upper and lower limit for sensor data, like temperature and humidity
+	\item Maximal displacement value for distance and gyro. These values represent the maximal difference in registered values that is allowed for positional measurements.
+	\item Time between measurements. This gives the time period that will pass between measurements for each device and measurement type.
 \end{itemize}
 Once the parameters chosen, the user can start the observation.\\
 Each iteration of the observation loop begins with a call to the network for a list of all tags currently in the network.
@@ -290,13 +290,13 @@ The phone must then evaluate the retrieved data. \\
 During the evaluation process, the phone creates an evaluated measurement, and marks it as problematic or unproblematic.
 What the evaluation looks like depends on the metric.
 \begin{itemize}
-\item For most metrics, like humidity and temperature, the evaluated measurement is equivalent to the received measurement. It is then checked, if the measurement falls into the aceptable measurement parameters, set by the human.
-If it does not, the evaluated value is marked as problematic.
-\item Some metrics require comparisment to the previous data. The gyroscope reports the current orientation of the tag.
-This is then compared to all previous measurements and the maximal angular difference forms the evaluated measurement.
-If the evaluated metric is bigger then allowed by the set parameters, the measurement is marked as problematic
-After evaluation the original measurement is added to the list of previous measurements.
-\item The distance measurement has a unique evaluation process, which is describbed in section \ref{ss:distance_eval}.
+	\item For most metrics, like humidity and temperature, the evaluated measurement is equivalent to the received measurement. It is then checked, if the measurement falls into the aceptable measurement parameters, set by the human.
+	If it does not, the evaluated value is marked as problematic.
+	\item Some metrics require comparisment to the previous data. The gyroscope reports the current orientation of the tag.
+	This is then compared to all previous measurements and the maximal angular difference forms the evaluated measurement.
+	If the evaluated metric is bigger then allowed by the set parameters, the measurement is marked as problematic
+	After evaluation the original measurement is added to the list of previous measurements.
+	\item The distance measurement has a unique evaluation process, which is describbed in section \ref{ss:distance_eval}.
 \end{itemize}
 Once the data evaluation is done, the evaluated measurement is presented to the user over the GUI, together with the adress of the tag it belongs to.
 If the evaluated measurement is problematic, the driver it alarmed.
@@ -328,10 +328,10 @@ by setting one tag to the coordinates at theo origin, the solution will place th
 There are still an infinte amount of solutions to this quadratic function, since all solutions can be roatated around any axis and still return the same objective function.
 
 \begin{figure}[ht!]
-\includegraphics[height=150px]{graphics/schematics/connected_dots.png}
-\includegraphics[height=150px]{graphics/schematics/connected_dots_k_connected.png}
- \caption{ Left: Five dots, all having at least two connections, still blue can move independantly. Right: minimal 2-connected graph, no movement possible. }
-\label{f:connected_dots}
+	\includegraphics[height=150px]{graphics/schematics/connected_dots.png}
+	\includegraphics[height=150px]{graphics/schematics/connected_dots_k_connected.png}
+	\caption{ Left: Five dots, all having at least two connections, still blue can move independantly. Right: minimal 2-connected graph, no movement possible. }
+	\label{f:connected_dots}
 \end{figure}
 
 For a point to be clearly placed in Euclidean space, three distances to other points have to known.
