@@ -23,20 +23,20 @@ Since ranging is part of this work and LRP is generally not used for ranging, I 
 Since UWB devices tend to be small and have a low energy consumption, in combination with the capability of ranging as well as data transfer, they have become popular as Internet of Things (IoT) devices. \\ 
 
 The standard defines the PHY and MAC layer as well as frequency bands for communication.
-The 4z expantion tries to integrate UWB into the the WPAN standard. In Section ... and ... I will discuss the PHY and MAC layer.\\
+The 4z expansion tries to integrate UWB into the the WPAN standard. In Section ... and ... I will discuss the PHY and MAC layer.\\
 
 The sending devices emits pulses in a pre-set band of frequencies, using short bursts to transmit the bits.
-The signal forms a concave curve in this band, where the two points that are 10 db below the maximum power spectral density are called the lower- and upper-frequency point, see figure \ref{f:UWB_spectrum}.
+The signal forms a concave curve in this band, where the two points that are 10 db below the maximum power spectral density are called the lower- and upper-frequency point, see Figure \ref{f:UWB_spectrum}.
 These two points must at least 500 Hz apart.
 The maximum power spectral density must be below the noise level.
-This proces prevents confilcts with other communications, that use a single frequency with a high power spectral density and modulate signal transmission, such as WI-FI or Bluetooth.
-The UWB protocoll has the added benefit of beeing usefull for high accuracy localization.
+This process prevents conflicts with other communications, that use a single frequency with a high power spectral density and modulate signal transmission, such as WI-FI or Bluetooth.
+The UWB protocol has the added benefit of being useful for high accuracy localization.
 
 
 \begin{figure}[ht!]
 \centering
- \caption{Power Spectral Density: Bandwidth B, lower-frequency f\textsubscript{L}, upper-frequency f\textsubscript{H}, \cite{hsu_2021}}
 \includegraphics[width=\linewidth]{graphics/UWB_spectrum.jpg}
+\caption{Power Spectral Density: Bandwidth B, lower-frequency f\textsubscript{L}, upper-frequency f\textsubscript{H}, \cite{hsu_2021}}
 \label{f:UWB_spectrum}
 \end{figure}
 
@@ -55,16 +55,16 @@ Each device also has a extended address, that is not assigned by any coordinator
 \subsection{UWB MAC}
 \label{sec:UWB MAC}
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=\linewidth]{graphics/general_MAC_Frame_Format.png}
-\caption{General MAC Frame Format \cite{IEEE4-2020-7}}
-\label{f:MAC Frame Format}
-\end{figure}
-
 The Mac Layer is part of the Data link layer.
 The Mac Frame is the payload of the PHY frame. It carries information about the type of frame, frame-format, security mechanism, adressing and frame validation.
 The Mac Layer additionaly provides rules for beacon managment, chanel access.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\linewidth]{graphics/general_MAC_Frame_Format.png}
+	\caption{General MAC Frame Format \cite{IEEE4-2020-7}}
+	\label{f:MAC Frame Format}
+\end{figure}
 
 
 \subsubsection{MAC Frame Format}
@@ -112,7 +112,7 @@ The bands, 16 chanels and their ranges and which chanels are mandatory can be fo
 
 \begin{table}[ht!]
 \centering
-\begin{tabularx}{\textwidth}{|l|l|c|c|}
+\begin{tabular}{|l|l|c|c|}
 \hline
 \textbf{Channel number} & \textbf{Center frequency (MHz)} & \textbf{HRP UWB band}       & \textbf{Mandatory}  \\ 
 \hline
@@ -148,7 +148,7 @@ The bands, 16 chanels and their ranges and which chanels are mandatory can be fo
 \cline{1-2}\cline{4-4}
 15                      & 9484.8                          &                             &                 \\
 \hline
-\end{tabularx}
+\end{tabular}
 \caption{ HRP UWB Frequency and Channel Assignments  \cite{IEEE4-2020-7, IEEE4z}}
 \label{Table:: UWB frequency and channel assignments}
 \end{table}
@@ -204,27 +204,31 @@ The guard exists to minimize inter-symbol interference from the
 signals taking multiple paths.
 \end{itemize}
 
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\linewidth]{graphics/HRP_UWB_PHY_symbol_structure.jpg}
+	\caption{HRP UWB PHY Symbol Structure \cite{hsu_2021}}
+	\label{f:symbol structure}
+\end{figure}
+
 One or both of these encoding-strategies can be used in a uwb transmission.
-The poition of the pulses inside of the burst (see figure \ref{f:UWB_signal_description})  relative to each other can be used to detect the presence of multipath effects and ajust for them. 
-Using this, precises arival times for the wohle signal can be calculated.
+The poition of the pulses inside of the burst (see figure \ref{f:UWB_signal_description})  relative to each other can be used to detect the presence of multipath effects and adjust for them. 
+Using this, precises arrival times for the whole signal can be calculated.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\linewidth]{graphics/uwb_signal_tramsmission.png}
+	\caption{UWB signal transmission byte encoding, \cite{QorvoGettingBacktoBasics}}
+	\label{f:UWB_signal_description}
+\end{figure}
 
 Non-HRP ERDEV use BPM and BPSK.
 Some HRP-ERDEV can use only BPSK, using a higher PRF and therefore reducing airtime.
 
 
-\begin{figure}[ht!]
-\centering
- \caption{UWB signal transmission byte encoding, \cite{QorvoGettingBacktoBasics}}
-\includegraphics[width=\linewidth]{graphics/uwb_signal_tramsmission.png}
-\label{f:UWB_signal_description}
-\end{figure}
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=\linewidth]{graphics/HRP_UWB_PHY_symbol_structure.jpg}
-\caption{HRP UWB PHY Symbol Structure \cite{hsu_2021}}
-\label{f:symbol structure}
-\end{figure}
+
+
 
 
 
@@ -237,7 +241,7 @@ The PHY payload contains the data that is to be send, namly the MAC frame.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=\linewidth]{graphics/Schematic_view_PPDU.png}
-\caption{Schematic View of a PHY frame defined by IEEE 802.15.4 \cite{IEEE4-2020-7}}
+\caption{Schematic view of a PHY frame defined by IEEE 802.15.4 \cite{IEEE4-2020-7}}
 \label{f:PPDU general}
 \end{figure}
 
@@ -292,7 +296,7 @@ Since UWB can also be used only for ranging without transmitting a message, conf
 \label{f:HRP-erdev frame}
 \end{figure}
 
-Aditionaly the PHR can be formatted differently (see gigure \ref{f:PHR 4z}. 
+Additionally the PHR can be formatted differently (see gigure \ref{f:PHR 4z}. 
 The reserved field and preamble duration is removed to make more space for the frame length. This allows to send more data in one frame, increasing the throughput of the UWB communication.
 
 \begin{figure}[ht!]
@@ -305,8 +309,8 @@ The reserved field and preamble duration is removed to make more space for the f
 
 \subsection{Two-way ranging}
 \label{ss:two_way_ranging}
-The IEEE 802.15.4z UWB standard describes tww ranging methos, Single-sided two-way ranging (SS-TWR) and Double-sided two-way ranging (DS-TWR).
-In both instances, the distance measurement is done by calculating the time of flight (ToF) of a signal sent between two device using timestamps and mutliplying it with the speed of light. 
+The IEEE 802.15.4z UWB standard describes two ranging methods, single-sided two-way ranging (SS-TWR) and Double-sided two-way ranging (DS-TWR).
+In both instances, the distance measurement is done by calculating the time of flight (ToF) of a signal sent between two device using timestamps and multiplying it with the speed of light. 
 In this section both SS-TWR and DS-TWR will be discussed.
 In all other parts of the thesis,two-way ranging(TWR) refers to DS-TWR.
 

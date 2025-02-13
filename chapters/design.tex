@@ -115,8 +115,6 @@ Table \ref{table:otherPins} shows how the sensors are connected to the remaining
 
 \begin{table}[]
 	\centering
-	\caption{Adruino compatible pin assignment}
-	\label{table:ArdruinoPins}
 	\begin{tabular}{l|l|l|l|l|}
 		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
 		\hline \multicolumn{1}{|l|}{\multirow{10}{*}{\rotatebox{90}{P4}}}
@@ -158,12 +156,12 @@ Table \ref{table:otherPins} shows how the sensors are connected to the remaining
 		\multicolumn{1}{|l|}{} & P0.31  &               &             &             \\
 		\hline 
 	\end{tabular}
+\caption{Adruino compatible pin assignment}
+\label{table:ArdruinoPins}
 \end{table}
 
 \begin{table}[]
 	\centering
-	\caption{Non-Adruino compatible pin assignment}
-	\label{table:otherPins}
 	\begin{tabular}{l|l|l|l|l|}
 		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
 		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P6}}} 
@@ -196,6 +194,8 @@ Table \ref{table:otherPins} shows how the sensors are connected to the remaining
 		\multicolumn{1}{|l|}{} & GND    &               &             &             \\
 		\hline
 	\end{tabular}
+\caption{Non-Adruino compatible pin assignment}
+\label{table:otherPins}
 \end{table}
 
 
@@ -250,7 +250,7 @@ This again was not added, since it is not part of this thesis.
 
 \begin{figure}[ht!]
 	\includegraphics[width=\linewidth]{graphics/schematics/obervation_loop.png}
-	\caption{Sequence diagram of setup and oberservation loop. Setup is berformed one, oberservation loop repeats until stopped.}
+	\caption{Sequence diagram of setup and oberservation loop. Setup is performed once, oberservation loop repeats until stopped.}
 	\label{f:observation_loop}
 \end{figure}
 
@@ -328,9 +328,18 @@ by setting one tag to the coordinates at theo origin, the solution will place th
 There are still an infinte amount of solutions to this quadratic function, since all solutions can be roatated around any axis and still return the same objective function.
 
 \begin{figure}[ht!]
-	\includegraphics[height=150px]{graphics/schematics/connected_dots.png}
-	\includegraphics[height=150px]{graphics/schematics/connected_dots_k_connected.png}
-	\caption{ Left: Five dots, all having at least two connections, still blue can move independantly. Right: minimal 2-connected graph, no movement possible. }
+	\begin{subfigure}{.4\linewidth}
+		\centering
+		\includegraphics[height=150px]{graphics/schematics/connected_dots.png}
+		\caption{3-edge connected graph}
+	\end{subfigure}
+\hspace{1cm}
+	\begin{subfigure}{.4\linewidth}
+		\centering
+		\includegraphics[height=150px]{graphics/schematics/connected_dots_k_connected.png}
+		\caption{2 connected graph}
+	\end{subfigure}
+	\caption{ Left: Five dots, all having at least two connections, still blue can move independently. Right: minimal 2-connected graph, no movement possible. }
 	\label{f:connected_dots}
 \end{figure}
 
