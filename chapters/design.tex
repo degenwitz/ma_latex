@@ -56,7 +56,9 @@ Since the communications is mostly the same, I used his implementation, but chan
 
 \subsubsection{Accelerometer and Gyroscope}
 The MPU6050 sensor produced by InvenSense Incorporated provides accelerometer and gyroscope data.
- In this project I did not use the accelermoter data, just the gyroscope.
+The accelerometer reports the acceleration in the three cardinal directions in meters per second.
+The Gyroscope reports the rotation around the threee euclidean axis in degrees per second.
+In this project the accelermoterdata was not used, just the gyroscope.
 
 The MPU6050 uses 4 pins, two for power suply and ground and two communication.
 The Sensor communicates using the I2C protocoll, a serial synchronus communication system.

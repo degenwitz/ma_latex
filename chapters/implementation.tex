@@ -1,6 +1,108 @@
 \chapter{Implementation}
+\label{c:implementation}
+
+In this section, the implementation that was used for the experiment is discussed.
+In section \ref{s:tag} the implementation of the tags is presented.
+Section \ref{s:app} is about the implementation of the App.
+
+\section{Tag}
+\label{s:tag}
+The software of the tags consits of n modules:
+\begin{enumerate}
+	\item Temperature and humidity sensor
+	\item Gyroscope
+	\item Two way ranging
+	\item UWB network
+	\item BLE communication
+	\item Job handler
+\end{enumerate}
+The following subsections will discuss the first five modules, followed by how they interact using the job handler module.
+The section \ref{ss:combination} discusses chalanges from combining these modules and how they were solved.
+
+\subsection{Temperature and humidity module}
+\label{ss:temp_hum_module}
+This module is responsible for managing the DHT22 humidity and temperature sensor.
+It is responsible to setup the sensor during initial startup and to provide the sensors measurements when queried.
+The DHT22 sensor communicates using only one data pin, pin 13, which will be referd to as the data pin in this section.
+Dmitry Sysoletin created an implementation \ref{sysoletin2021nrf52_dht11} for the DHT11 sensor together with the nRF52840 board that build the basis for this implementation, by addapting it to the DHT22 and adding functionalities needed by the job handler module.
+
+
+Since the DHT22 is a very simple sensor, using single bus comunication, not much setup is needed.
+The evaluation of the sensor data requires that the voltage of the pin is read out in pre-defined intervals, when reading the sensor data.
+To do this, a clock is required.
+This resource has to be reserved an initiated at startup.
+This is the only setup that is required for the DHT22 sensor.
+
+
+To initiate a sensor-read the voltage of the data pin is set to 0.
+When the sensor is in standby mode, the data pin is on \textit{logic high}, and when set to \textit{logic low}, the sensor will respond with a read of its current value.
+A schematc view of a sensor read of the DHT22 can be seen in Figure \ref{f:dht22_signal}.
+The temperature and humidity module will then check the Pin State in intervals of 5ms, until a \textit{logic low} is registered, signalling that the sensor has registered the request. 
+The module will now monitor the pin state, waiting for \textit{logic low} followed by a \textit{logic high}, this beeing the start condition of the data transfer. \\
+The data is transfered in five chunks of eight bits.
+Each bit is preceeded by a prolonged \textit{logic low} state, that is detected by the module
+The module then proceeds to write the state of the data pin into a 8-bit buffer, \textit{logic high} corresponding to a 1 and \textit{logic low} to 0.\\
+Once all five chunks are read, the communication has ended and the module can verify the data.
+The first two bytes correspond are combined to form the temperature information in celcius, the second and third form the humidity.
+Both values are multiplied by 100 and stored in a 16-bit integer. This doesn't loose data, since the sensor only measures up to a precision of 1 after the decimal point.
+The data beeing stored in an integer help with data transfer.
+It will be converted back on the phone.
+The fith chunk contains the parity and is used to accept or reject the humidity and temperature values.
+If the process fails at any state, -100°C is returned for the temperature and -100% for humidity.
+These form both impossible values, since humidity can't be negative and the DHT22 sensor can only detect temperatures as low as -20°C.
+
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{graphics/DHT22_signal.png}
+\caption{Signal of a DHT22 sensor-read as presented in the manual \cite{AM2302}.}
+\label{f:dht22_signal}
+\end{figure}
+
+\subsection{Gyroscope}
+\label{ss:gyro_module}
+This module manages the MPU6050 gyroscope and accelerometer.
+It is responsible to setup the sensor and report its result.
+An implementation for the MPU6050 was present in the nRF52 15.3.0 SDK, but is no longer avaliable for the nRF52 17.1.0 SDK, used in this project.
+The old implementation was ported to this project.
+This consisted of replacing deprecated parts of the SDK with updated ones and adding newly required flags to the build.
+
+
+MPU6050 sensors use the I2C communication protocol.
+The nRF52 SDK does not include an implementation for this protocol, but has a Two Wire Interface (TWI) implementation that is compatible with the I2C protocol.
+During startup the TWI module has to be initialized.
+This is handled by the SDK, but requires some parameters to be passed.
+\begin{itemize}
+	\item The Serial Clock Line (SCL) defines what pin will be used for the clock shared in the TWI. This implementation uses pin 11.
+	\item The Serial Data Line (SDA) defines which pin is used for the data communication. Pin 12 was used.
+	\item The frequency which the TWI uses. It is defined in MPU6050 data sheet, and is 100 kHz \cite{MPU6050}.
+	\item The Interrupt priority is a rank that determins, how easyely this process can cause an interrupt. It is set to high.
+\end{itemize}
+After the TWI service is initiated with these parameters, it is enabled, ensuring that its resources are locked and can not be used by other services.
+
+
+Afterwards the results from the sensor can be read using the TWI service again.
+The TWI-TX requires the adress of the read device and a registry where to write the MPU6050 datasheet \cite{MPU6050}.
+The adress of the sensor is the same for all MPU6050 sensors and can be found in the manua
+It sets a flag to true once the sensor has writen the data, which then can be read using the TWO-RX function.
+The result consist of three 16-bit integers, representing the angular velocity arround the X,Y and Z axis, shown in figure \ref{f:MPU6050_orientation}. 
+
+
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=200px]{graphics/MPU6050_orientation.png}
+\caption{Schematic view of the MPU6050, showing the direction of the three axis X,Y,Z.}
+\label{f:MPU6050_orientation}
+\end{figure}
+
+
+\section{Combining modules}
+\label{ss:combination}
+
 
 \section{App}
+\label{s:app}
 Nordic Semi Conductors, the maker of the used microcontrolers, published the code to a simple app that allows for BLE communication with their devices.
 It is called nRF Toolbox.
 It is intended to pair with the ble\_ app\_ uart example, published in the nRF52 SDK.
