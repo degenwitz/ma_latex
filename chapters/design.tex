@@ -5,7 +5,7 @@ In the section \ref{ss:hardware} the components used are presented.
 Section \ref{Dataflow} desctibes the functionalities and responsibilities of the system components.
 In Section \ref{ss:network} the network topology and data-flow is discueed
 
-\subsection{Hardware}
+\section{Hardware}
 \label{ss:hardware}
 
 This sectiondescribes the hardware used in the project. The setup consists of two distinct components: the artwork-tags, of which there are four, and one Phone that provides the interface to the user. The tag itself consists of 4 components:
@@ -16,7 +16,7 @@ This sectiondescribes the hardware used in the project. The setup consists of tw
 	\item MPU6050 accelerometer and gyroscope
 \end{enumerate}
 
-\subsubsection{Microcontroler}
+\subsection{Microcontroler}
 The fundament of the artwork-tag is build by the nRF52840 DK microcontroller developed by Nordic Semiconductors. 
 It is part of the nRF52 series of microcontrollers intended for development.
 The nRF52840 DF is specialiezed for ble communication, for which it already includes the neccesary components.
@@ -29,7 +29,7 @@ The nRF52840 DK includes a USB-B port that is used for Powersuply. Additionally 
 The nRF52 was chosen since it was avaliable and previous projects have been done with it in compination with the DWM3000 shield.
 As a result a lot of initial setup was already avaliable.
 
-\subsubsection{UWB shield}
+\subsection{UWB shield}
 For communication between the tags as well as distance measurement the DWM3000 UWB-shield developed by Qorvo was chosen.
 The DWM3000 is a commonly used device for research involving UWB \cite{coppens2022overview, leu2022ghost, stocker2022performance}.
 It allows low level access, but includes an SDK written in C that makes a lot of the processes transparent to the user, if they wish.
@@ -37,7 +37,7 @@ The SDK uses the Serial Peripheral Interface (SPI) for communication between the
 
 
 
-\subsubsection{Humidity and temperature sensor}
+\subsection{Humidity and temperature sensor}
 
 For humidity and temperature sensors I decided to use the DHT22(AM2302) produced by Guangzhou Aosong Electronic Co. \cite{AM2302}. 
 It is a comonly used sensor in IoT monitoring systems \cite{ahmad2021evaluation}. 
@@ -54,7 +54,7 @@ Since no SDK for this type of communication has been build for the nRF52 board s
 Dmitry Sysoletin published a project on github (\url{https://github.com/DSysoletin/nRF52_DHT11_example}) that handles the communication between an nRF52840 and a DHT11 sensor. 
 Since the communications is mostly the same, I used his implementation, but changed the parsing of the actual data to fit the encoding used by the DHT22.
 
-\subsubsection{Accelerometer and Gyroscope}
+\subsection{Accelerometer and Gyroscope}
 The MPU6050 sensor produced by InvenSense Incorporated provides accelerometer and gyroscope data.
 The accelerometer reports the acceleration in the three cardinal directions in meters per second.
 The Gyroscope reports the rotation around the threee euclidean axis in degrees per second.
@@ -68,7 +68,7 @@ While the nRF52 SDK does not supply a I2C API, it offers a Two Wire Interface (T
 It even used to offer MPU6050 specific support in the older SDK. 
 I was able to port this older code to the current SDK.
 
-\subsubsection{Tag technical plan}
+\subsection{Tag technical plan}
 The microcontroler builds the base of the Artwork-Tag. 
 The other devices are attached to it over the avaliable pins.
 In the nRF52 SDK each data pin is assigned an integer value. 
@@ -348,7 +348,6 @@ This alone is not sufficient to insure a unique results.
 The left of Figure \ref{f:connected_dots} illustrates this point in two-dimensional space.
 Every circle is connected to two others, still the blue circles can move without the whole figure moving.
 What is needed to keep every point static is for known distances and tags to build a four-connected graph (three in two dimensions).
-A four-connected graph is a graph, were it takes at least four removal of vertices, to create two isolated subgraphs.
 The left of Figure \ref{f:connected_dots} shows a sollution of the problem on the right by creating a three-connected subgraph.
 
 Once the coordinates for all tags are found, they are compared to previous results.
@@ -361,8 +360,56 @@ If the evaluated measurement is larger then the maximal allowed displacement, th
 \section{Network}
 \label{s:network}
 
-\subsubsection{LR-WPAN Topologies}
-Star-topologies or PtP where one device is a FFD that acts as a PAN coordinator.
-"The main goals of LR-WPANs are easy installation of networks, reliable short-range data transfer and meeting the need for relaxed throughput requirements."
+For the presented network to work, tags need to be ranked.
+This means that for each tag pair $i,j$, one can either say that $rank(i)<rank(j)$ or $rank(j)<rank(i)$.
+To achieve this, the universal unique identifiers are used.
+No matter what form the UUID has, it can be converted to an integer, by simply interpreting its binary code as one.
+Since the UUIDs are unique, no to tags will have the same resulting integer.
+When refering to the rank of a tag in this section, the integer representing the UUID is intended.
 
-\subsection{Ranging}
+The tags inside the truck, while not connected to a phone, form a dicentralized mesh using UWB for communication.
+Each tag keeps two list, a list of known devices and a list of neighbours.
+When a new tag joins the network, it sends a joining request over UWB, containing its universal unique id (UUID), using a weak signal.
+All tags in the network that receive this request add the new device to their list if known devices. 
+If the new devices also has a heigher rank, they additionaly add it to their list of neighbours.
+They then answer by sending their own UUID and adress back to the new tag.
+By waiting an amount of time that correlates with their UUID, the tags in the network can ensure, that their answers don't overlap.
+The new tag adds the received adresses and UUIDs to its known device list. If the rank of the added tag is also has a higher rank then the new tag, it will add it to the list of neighbours.
+If the new tag now has four neighbours, it stops. Otherwise it will repeat the process with a incresasingly stronger signal, until it has either found four tags with higher rank or reached maximum signal strength.
+Afterwards it starts addvertising its BLE connection.
+This concludes the network joining process.
+
+
+A user with a phone can connect to any of the advertised BLE connection.
+Once that happens, the tags in the tracks will switch from their dicentralized mesh to a star-topology, with the connected device serving as the coordinator.
+The coordinator will inform all tags about its new status, by sending a message using a strong UWB signal.
+The tags will then acknowledge this message in order of rank.
+The tags in the network will still keep their stored neighbours and known devices.
+The coordinator records a list of all acknowledgemtns, thus creating a list of all devices in the network.
+
+
+The phone can request the list of all tags from the coordinator.
+The phone can now also query the tags in the truck by sending the query to the coordinator over BLE, which then will pass it directly to the apropriate tag using BLE.
+For all sensor data, this is a simple call and response request. \\
+If a distance measurement is queried, the tags takes the following steps:
+\begin{itemize}
+	\item It conducts a UWB two-way ranging session with each tag in the neighbour list.
+	\item It reports those results to the coordinator tag.
+	\item It orders all received distances.
+	\item It keeps the tags with the four lowest distances and deletes the rest from the neighbour list.
+\end{itemize}
+The first time a distance is requested, the tag will perform more ranging sessions then necesary to build a 4-connected graph.
+Afterwards it only perform ranging with four other tags, unless a new device was added.
+If a ranging session does not report a result, because a tag left or became unavaliable, the tag adds ads the tag with the shortest previously measured distance and higher rank from the list of known devices back intro the list of neighbours.
+
+
+This design mirrors the algorithm proposed by \cite[khan2007simple] and presented in section \ref{ss:k_connected_explained}.
+It creates an approximation of a minimaly weighted k-connected subgraph, based on the measured distances.
+This is allowed, since the distances are in euclydean space, which when mapped to a graph forms a metric graph.
+As discussed in section \label{ss:distance_eval}, a four-connected graph is needed to uniquly identify the position of each tag.
+The graph should be minimaly weighted, so that measurements are between tags that are as close as possible to each other.
+This reduces the multipath effect and theirfore increases precision.
+
+
+If the tags are not connected to a phone and report their data to a remote server, they can still use the same distance-measurement, to approximate the k-connected subgraph.
+The quadratic program can then be calculated on the server.
