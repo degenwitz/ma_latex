@@ -441,75 +441,96 @@ The workarounds do generaly have no effect on the implementation, with one excpe
 
 \section{App}
 \label{s:app}
-Nordic Semi Conductors, the maker of the used microcontrolers, published the code to a simple app that allows for BLE communication with their devices.
-It is called nRF Toolbox.
-It is intended to pair with the \textit{ble{\_}app{\_}uart} example, published in the nRF52 SDK.
-Since this example code was used as the basis for the ble communication used in this project, it was addapted to work with this project.
+Nordic Semi Conductors, the maker of the used microcontrollers, published the code to the nRF Toolbox, a simple app that allows for BLE communication with their devices.
+It is intended to pair with the \textit{ble{\_}app{\_}uart} example, published in nRF52 SDK.
+Since the \textit{ble{\_}app{\_}uart} example code was used as the basis for the BLE communication on the tag side, the nRF Toolbox app was adapted for this project.
 
+Since the development of an application was not the primary focus of this thesis, it was decided to take the nRF Toolbox app and add a new module for art-tracking to it.
+The nRF Toolbox already contains different modules, intended for different examples.
+Among them is Universal Asynchronus Receiver/Transmitter (UART) module (see \ref{f:Toolbox_modules}), which served as the basis for a new art-tracking module, since it had a lot of useful services already implemented.
 
-The App contains different modules, intended for different examples, among them the Universal Asynchronus Receiver/Transmitter (UART) module (see \ref{f:Toolbox_modules}).
-It is intended to be used with the ble\_ app\_ uart example.
-When opem it shows the ble services that are currently beeing addvertised and allows the user to connect to one of them \ref{f:Toolbox_connect}.
-It then opens a window similar to phone messangers, were the keyboard can be used to tpye messages, that are sent to the connected devices.
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[trim={0 4cm 0 3cm},clip, width=.4\linewidth]{graphics/nRF_toolbox_modules.jpg}
+	\caption{nRF Toolbox module menue, with the added Art Tracking Module}
+	\label{f:Toolbox_modules}
+\end{figure}
+
+%The UART module is intended to be used with the ble\_ app\_ uart example.
+Before discussing the new implementations, a description of the original UART module is provided to facilitate the understanding of the modifications in the art-tracking module.
+When the UART module is opened, it shows all BLE services currently advertised and allows the user to connect to one of them \ref{f:Toolbox_connect}.
+Once connected, it opens a window similar to phone messengers.
+Here, it allows a keyboard input from the user and sends these messages to the connected devices (see \ref{f:Toolbox_output}).
+
+%TODO A tiny bit of bullshit, why these are services are useful for the art-tracking app
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=200px]{graphics/nRF_toolbox_modules.jpg}
-\caption{nRF Toolbox module menue, with the added Art Tracking Module}
-\label{f:Toolbox_modules}
+\begin{subfigure}{.4\linewidth}
+	\includegraphics[trim={0 4cm 0 3cm},clip, width=\linewidth]{graphics/nRF_toolbox_connect.jpg}
+	\caption{nRF Toolbox shows avaliable devices to connect to}
+	\label{f:Toolbox_connect}
+\end{subfigure}
+\hspace*{.1\linewidth}
+\begin{subfigure}{.4\linewidth}
+	\includegraphics[trim={0 0 0 1.5cm},clip, width=\linewidth]{graphics/nRF_toolbox_messanger.jpg}
+	\caption{nRF Toolbox UART module screen}
+	\label{f:Toolbox_output}
+\end{subfigure}
 \end{figure}
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=200px]{graphics/nRF_toolbox_connect.jpg}
- \caption{nRF Toolbox shows avaliable devices to connect to}
-\label{f:Toolbox_connect}
-\end{figure}
+The main differences of the art-tracking module to the UART module are after connecting to the relevant services.
+So the are-tracking module opens up the same connection page as the UART module \ref{f:Toolbox_connect}, in which the user is able to select the BLE service and connect to it.
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=200px]{graphics/nRF_toolbox_messanger.jpg}
-\caption{nRF Toolbox UART module screen}
-\label{f:Toolbox_output}
-\end{figure}
-
-Since the development of an application was not the primary focus of this thesis, it was decided to take the nRF Toolbox app and add a new module for art-traking to it.
-The UART module searved as the basis for this new module, since it had a lot of usefull services already implemented.
-As with the UART module the art-tracking module opens up the same connection page \ref{f:Toolbox_connect}, that allows the user to select the art-tracking and connect to it.
-
-Once connected, the observation screen is shown (figure \ref{f:Toolbox_art_tracking_empty}).
-At the bottom seven parameters can be set: \textit{time}, \textit{max Temp}, \textit{min Temp}, \textit{max Hum}, \textit{min Hum}, \textit{max Angle}, \textit{max Dist}.
+Once connected, instead of the UART module, the observation screen is shown (Figure \ref{f:Toolbox_art_tracking_empty}).
+It also contains an output field, which will display messages.
+At the bottom, seven parameters can be set: \textit{time}, \textit{max Temp}, \textit{min Temp}, \textit{max Hum}, \textit{min Hum}, \textit{max Angle}, \textit{max Dist}.
 The parameters \textit{max}/\textit{min} \textit{Temp}/\textit{Hum} represent the expected range of humidity and temperature.
-Any measurement outside these parameter will be considered a dangerous value by the app.
-The tollerated difference in angle compared to the previous measurement is set by \textit{max Angle}, larger differences are considered dangerous values.
-Distance measurement work analogously with \textit{max Dist} in meters.
-The \textit{time} set defines the time that passes enbetween measurements in seconds.
-The default is set to 350 seconds.
-This means that the time that passes between, for example, the temperature measurements on tag 2 are 350 seconds.
+Any measurement outside these parameters will be considered a dangerous value by the app.
+The tolerated difference in angle compared to the previous measurement is set by \textit{max Angle}, larger differences are considered dangerous values.
+Distance measurement works analogously with \textit{max Dist} in meters.
+The \textit{time} set defines the time that passes between measurements in seconds.
+The default time is set to 350 seconds.
+This means that the time passing between, for example, the temperature measurements on tag 2 is 350 seconds.
 
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=200px]{graphics/nRF_toolbox_art_tracking_empty.jpg}
-\caption{Art Tracking module oberservation screen before measurements}
-\label{f:Toolbox_art_tracking_empty}
+\begin{subfigure}{.4\linewidth}
+	\includegraphics[trim={0 4cm 0 3cm},clip,width=\linewidth]{graphics/nRF_toolbox_art_tracking_empty.jpg}
+	\caption{Art Tracking module oberservation screen before measurements}
+	\label{f:Toolbox_art_tracking_empty}
+\end{subfigure}
+\hspace*{.1\linewidth}
+\begin{subfigure}{.4\linewidth}
+	\includegraphics[trim={0 4cm 0 3cm},clip, width=\linewidth]{graphics/nRF_toolbox_Bad_Value_2.jpg}
+	\caption{Art Tracking module, queries and responses}
+	\label{f:Toolbox_art_filled}
+\end{subfigure}
 \end{figure}
 
 
-When the user presses the \textit{Start Service} button, a services starts that poeriodically queries the tags for the Measurements.
-Figure \ref{code:App_main_loop} shows the measurement loop.
+When the user presses the \textit{Start Service} button, a program starts that periodically queries the tags for the measurements.
+Once this process has started, the queries will appear in the chat window on the right side of the screen (see Figure \ref{f:Toolbox_art_filled}).
+The current tag is mentioned on the right side and corresponding measurements are on the left side.
+If the measurement is inside the set parameters, the message bubble will appear blue.
+If the measured value is considered a dangerous value, the text bubble will appear red.
+Since the message display is programmed in an asynchronous way, it can happen, that the answer to a query appears before the query itself, if the queried tag is the same as the tag connected to the phone.
+This service can be stopped by pressing the \textit{start service} button again or by exiting this screen in any way.
+
+The measurement loop for the output is shown in Figure \ref{code:App_main_loop}.
 Each sensor is assigned a character.
 \textit{T} for temperature and humidity, \textit{G} for gyro and \textit{D} for distance.
 Each tag has a number, here from one to four since four tags were used in the experiments.
 The loop concatenates these two characters and sends the resulting query to the connected tag.
 Then the next tag-number is prepared for the next query.
 Once all tags have been queried for a sensor, the tag-number starts with the first again and the next sensor is queried.
-In between cals the app waits.
+In between calls the app waits.
 The call time for distance-measurement is fixed at 80 seconds.
 Distance measurement takes longer than the other sensors, since for every devices three measurements need tobe conducted.
-Additionaly the sensors that do not participate in a ranging session are sleeping for a quite generous amount of time, to ensure they don't distrub the ranging session.
+Additionally the sensors that do not participate in a ranging session are sleeping for a quite generous amount of time, to ensure they don't disturb the ranging session.
 80 seconds has been chosen, since it allows enough time for all the ranging to happen, plus two repeats per sensor in case the ranging session fails.
-For the other sensors the waiting time in between queries is calculated from the remaining set time, after the ranging time is deducted.
+For the other sensors, the waiting time in between queries is calculated from the remaining set time, after the ranging time is deducted.
 
 \begin{figure}[h]
     \centering
@@ -545,23 +566,7 @@ For the other sensors the waiting time in between queries is calculated from the
 	\label{code:App_main_loop}
 \end{figure}
 
-Once the process has started, the queries will appear in the chat window on the right side of the screen.
-The responses are on the right side, see figure \ref{code:App_main_loop}.
-If the response is inside the set parameters, the message bubble will appear blue.
-If the measured value is considered a dangerous value, the text bubble will appear red (see figure \ref{f:Toolbox_art_filled}).
-Since the message display is programmed in a asynchronus way, it can happen, that the answer to a query appears before the querry itself, if the querried tag is the same as the connected tag.
-The service can be stopped by pressing the \textit{start service} button again or by exiting this screen in any way.
 
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=200px]{graphics/nRF_toolbox_Bad_Value_2.jpg}
-\caption{Art Tracking module, queries and responses}
-\label{f:Toolbox_art_filled}
-\end{figure}
-
-
-%TODO: add image that shows an example file
 The query-answers are appended to a file that is safed in the app-storage.
 The information appendded consits of: the queried tag, the returned values, a timestamp and if the value was unproblematic.
 This functionality is intended for experimental evaluation. 
@@ -571,3 +576,5 @@ It will open the Android naitive share functionality, to share the file over mai
 In this project all files were sent with email.
 Pressing the trashcan next to it will delete the chat and empty the file.
 This allows the user to distinguish between different testing session.
+
+%TODO: add image that shows an example file
