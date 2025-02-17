@@ -72,7 +72,7 @@ These are both potental research topics for future work.
 
 The implementation used in this thesis was intended as a proof of concept and therefore does not implement a fully functional art-tracking system.
 A focus was put on different types of sensors and how they would interact and report to the system.
-Therefore there the foxus was not on choosing the optimal sensors for an art-tracking system.
+Therefore the focus was not on choosing the optimal sensors for an art-tracking system.
 Future work could focus on the types of sensors used and assure they are optimaly chosen to capture all aspects that are relevant during art-preservation.
 This research could include, but is not limited to:
 \begin{itemize}
@@ -80,3 +80,22 @@ This research could include, but is not limited to:
 	\item Compare different humidity and temperature sensors.
 	\item Use gyroscopic data and ascelerometers to detect problematic vibration during travel, similar to \cite{landi2022iot}
 \end{itemize}
+
+
+The distance measrement and evaluation is not fully actulaized in this implementation.
+Future research could improve on the implementation by developing a better calibration method, then used in this implementation.
+This would presumably involve building the calibration system proposed by Qorovo. \\
+With better distance measurement, future researchers could implement the positioning model proposed in the design section of this thesis. 
+This would include small ajustment to the network building of the tags, and adding the functionality to the phone to build and solve the quadratic program.\\
+A better distance measurement would also allow for a better handeling of outliers and currupted data. As described in the limitations section of the evaluation \ref{s:chalanges}, the measurements from nearby nodes could be used to handle this kind of behaviour.
+
+
+The experiments were performed with only four tags and without access to an actual truck.
+It would be interesting to test the implementation on a larger scale, envolving more tags and differing modes of transportation.
+Research like that could investigate, if the design is well suited for real world use.
+
+Finaly the system could be addapted for systems other than trucks.
+The general design of the wireless sensor network could remain the same, even when transporting on a train or airplane.
+The communication with the phone would need to be adapted.
+BLE does not have infinite range and the presence of solid barriers shortens its distance even more, especialy metal ones.
+So a new design to communicate between the respoinsible person and the sensor network would be required.
