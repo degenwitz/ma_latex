@@ -70,20 +70,110 @@ It even used to offer MPU6050 specific support in the older SDK.
 I was able to port this older code to the current SDK.
 
 \subsection{Tag technical plan}
-The microcontroler builds the base of the Artwork-Tag. 
-The other devices are attached to it over the avaliable pins.
+The microcontroller builds the base of the Artwork-Tag. 
+The other devices are attached to it over the available pins.
 In the nRF52 SDK each data pin is assigned an integer value. 
-These often correspon with the name of the pin according to the nRF52830 DK manual, but not always.
+These often correspond with the name of the pin according to the nRF52830 DK manual, but not always.
 I will use the names given in the manual to describe the pins.
-Pins are the methods by which a microcontroller controls its peripheras.
+Pins are the method by which a microcontroller controls its peripheras.
+
+
+\begin{table}[ht!]
+	\centering
+	\begin{subtable}[b]{.4\linewidth}
+		\centering
+		\begin{tabular}{l|l|l|l|l|}
+			& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
+			\hline \multicolumn{1}{|l|}{\multirow{10}{*}{\rotatebox{90}{P4}}}
+			& P1.10  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.11  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.12  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.13  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.14  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.15  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P0.02  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.26  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P0.27  &               &             &             \\
+			\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P3}}}
+			& P1.01  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.02  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.03  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.04  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.05  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.06  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.07  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.08  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P1.10  & \checkmark    &             &             \\
+			\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P1}}}
+			& VDD    &               &             &             \\
+			\multicolumn{1}{|l|}{} & VDD    &               &             &             \\
+			\multicolumn{1}{|l|}{} & RESET  &               &             &             \\
+			\multicolumn{1}{|l|}{} & VDD    & \checkmark    & \checkmark  &             \\
+			\multicolumn{1}{|l|}{} & 5V     & \checkmark    &             & \checkmark  \\
+			\multicolumn{1}{|l|}{} & GND    & \checkmark    & \checkmark  & \checkmark  \\
+			\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & N.C.   &               &             &             \\
+			\hline \multicolumn{1}{|l|}{\multirow{6}{*}{\rotatebox{90}{P2}}}
+			& P0.03  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P0.04  & \checkmark    &             &             \\
+			\multicolumn{1}{|l|}{} & P0.28  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.29  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.30  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.31  &               &             &             \\
+			\hline 
+		\end{tabular}
+		\caption{Adruino compatible pin assignment}
+		\label{table:ArdruinoPins}
+	\end{subtable}
+	\hspace{.1\linewidth}
+	\begin{subtable}[b]{.4\linewidth}
+		\centering
+		\begin{tabular}{l|l|l|l|l|}
+			& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
+			\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P6}}} 
+			& P0.00  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.01  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.05  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.06  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.07  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.08  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.09  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.10  &               &             &             \\
+			\hline \multicolumn{1}{|l|}{\multirow{18}{*}{\rotatebox{90}{P24}}} 
+			& P0.11  &               &             & \checkmark  \\
+			\multicolumn{1}{|l|}{} & P0.12  &               &             & \checkmark  \\
+			\multicolumn{1}{|l|}{} & P0.13  &               & \checkmark  &             \\
+			\multicolumn{1}{|l|}{} & P0.14  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.15  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.16  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.17  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.18  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.19  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.20  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.21  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.22  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.23  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.24  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P0.25  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P1.00  &               &             &             \\
+			\multicolumn{1}{|l|}{} & P1.09  &               &             &             \\
+			\multicolumn{1}{|l|}{} & GND    &               &             &             \\
+			\hline
+		\end{tabular}
+		\caption{Non-Adruino compatible pin assignment}
+		\label{table:otherPins}
+	\end{subtable}
+	\caption{Pin assignments and compatibilities}
+\end{table}
 
 Some pins are intended for power supply.
 On the NRF52840 these pins are located in section P1, see table \ref{table:ArdruinoPins}.
-The three VDD pins suply electricity with a Voltage of 3.5 Volts.
-A secondary power supply that uses 5 Volts is also avaliable.
-What voltage is needed depends on the periipheral.
+The three VDD pins supply electricity with a Voltage of 3.5 Volts.
+A secondary power supply that uses 5 Volts is also available.
+What voltage is needed depends on the peripheral.
 In this case, the DHT22 runs on 3.5 Volts, while the MPU6050 is made for 5 Volts.
-The P1 section also contains two ground pins, that need to be connected to the peripherals and a reset pin, so restart the microcontroler.
+The P1 section also contains two ground pins, that need to be connected to the peripherals and a reset pin, to restart the microcontroller.
 The last pin is not connected (N.C.).
 There are additional ground pins in sections P4 and P24 of the board.
 
@@ -96,109 +186,23 @@ How a signal is interpreted is defined by the used communication protocol.
 The MPU6050 for example uses the I2C protocol and uses 2 datapins.
 This defines that one pin is used for a serial clock and the other pin transmits data.
 For the data transmission the protocol defines what a package looks like.
-This includes the start condition, the voltage characteristics that signal the beginning of a package, adressing, data encoding, acknowledgments and stop condition.
+This includes the start condition, the voltage characteristics that signal the beginning of a package, addressing, data encoding, acknowledgments and stop condition.
 
 The DHT22 sensor does not use a given communication-protocol.
 It uses one data-pin to report its sensor data.
-How that data is encoded to high and low voltage is specified in the user manual \cite{AM2302} and has to implemented manualy.
+How that data is encoded to high and low voltage is specified in the user manual \cite{AM2302} and has to implemented manually.
 
-The DWM3000 shield is mounted on the 32 pins ment for arduino one connections. 
+The DWM3000 shield is mounted on the 32 pins meant for arduino one connections. 
 All pins are forwarded and can be used by other devices, in a common ardruino-stackable style.
 If they are data-pins they will share the data.
 Table \ref{table:ArdruinoPins} shows which devices use which pins.
 The only pin shared by multiple devices are power and ground pins.
-The microcontroler suplies enough power to support this.
+The microcontroller supplies enough power to support this.
 
 The sensors are attached to the same powersource and ground as the shield, but use different data-pins.
 The DWM3000 leaves enough pins unused that both sensors could be attached to them.
 Since it is not visible which pins the shield leaves free, I decided to use data-pins that are not attached to the DWM3000 in any way.
 Table \ref{table:otherPins} shows how the sensors are connected to the remaining open pins.
-
-\begin{table}[]
-	\centering
-	\begin{tabular}{l|l|l|l|l|}
-		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
-		\hline \multicolumn{1}{|l|}{\multirow{10}{*}{\rotatebox{90}{P4}}}
-		& P1.10  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.11  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.12  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.13  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.14  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.15  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P0.02  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.26  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P0.27  &               &             &             \\
-		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P3}}}
-		& P1.01  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.02  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.03  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.04  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.05  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.06  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.07  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.08  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P1.10  & \checkmark    &             &             \\
-		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P1}}}
-		& VDD    &               &             &             \\
-		\multicolumn{1}{|l|}{} & VDD    &               &             &             \\
-		\multicolumn{1}{|l|}{} & RESET  &               &             &             \\
-		\multicolumn{1}{|l|}{} & VDD    & \checkmark    & \checkmark  &             \\
-		\multicolumn{1}{|l|}{} & 5V     & \checkmark    &             & \checkmark  \\
-		\multicolumn{1}{|l|}{} & GND    & \checkmark    & \checkmark  & \checkmark  \\
-		\multicolumn{1}{|l|}{} & GND    & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & N.C.   &               &             &             \\
-		\hline \multicolumn{1}{|l|}{\multirow{6}{*}{\rotatebox{90}{P2}}}
-		& P0.03  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P0.04  & \checkmark    &             &             \\
-		\multicolumn{1}{|l|}{} & P0.28  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.29  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.30  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.31  &               &             &             \\
-		\hline 
-	\end{tabular}
-\caption{Adruino compatible pin assignment}
-\label{table:ArdruinoPins}
-\end{table}
-
-\begin{table}[]
-	\centering
-	\begin{tabular}{l|l|l|l|l|}
-		& Pin & \rotatebox{90}{DWM3000\phantom{.}} & \rotatebox{90}{DHT22}  & \rotatebox{90}{MPU6050\phantom{.}}   \\
-		\hline \multicolumn{1}{|l|}{\multirow{8}{*}{\rotatebox{90}{P6}}} 
-		& P0.00  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.01  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.05  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.06  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.07  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.08  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.09  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.10  &               &             &             \\
-		\hline \multicolumn{1}{|l|}{\multirow{18}{*}{\rotatebox{90}{P24}}} 
-		& P0.11  &               &             & \checkmark  \\
-		\multicolumn{1}{|l|}{} & P0.12  &               &             & \checkmark  \\
-		\multicolumn{1}{|l|}{} & P0.13  &               & \checkmark  &             \\
-		\multicolumn{1}{|l|}{} & P0.14  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.15  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.16  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.17  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.18  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.19  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.20  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.21  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.22  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.23  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.24  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P0.25  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P1.00  &               &             &             \\
-		\multicolumn{1}{|l|}{} & P1.09  &               &             &             \\
-		\multicolumn{1}{|l|}{} & GND    &               &             &             \\
-		\hline
-	\end{tabular}
-\caption{Non-Adruino compatible pin assignment}
-\label{table:otherPins}
-\end{table}
-
 
 \section{Architecture}
 \label{ss:dataflow}
