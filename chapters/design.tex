@@ -2,38 +2,39 @@
 \label{c:design}
 
 This section presents the principle design of the monitoring system.
-In the section \ref{ss:hardware} the components used are presented.
-Section \ref{Dataflow} desctibes the functionalities and responsibilities of the system components.
-In Section \ref{ss:network} the network topology and data-flow is discueed
+The used components are presented in the section \ref{ss:hardware}.
+Section \ref{Dataflow} describes the functionalities and responsibilities of the system components.
+In Section \ref{ss:network} the network topology and data-flow is discussed
 
 \section{Hardware}
 \label{ss:hardware}
 
-This sectiondescribes the hardware used in the project. The setup consists of two distinct components: the artwork-tags, of which there are four, and one Phone that provides the interface to the user. The tag itself consists of 4 components:
+This section describes the hardware used in the project. The setup consists of two distinct components: the artwork-tags, of which there are four, and one Phone that provides the interface to the user. The tag itself consists of 4 components:
 \begin{enumerate}
-	\item nRF52840 Microcontroler
+	\item nRF52840 microcontroller
 	\item DWM3000 UWB Shield
 	\item DHT22 temperature and humidity sensor
 	\item MPU6050 accelerometer and gyroscope
 \end{enumerate}
 
 \subsection{Microcontroler}
-The fundament of the artwork-tag is build by the nRF52840 DK microcontroller developed by Nordic Semiconductors. 
+The artwork-tag's fundament is built by the nRF52840 DK microcontroller developed by Nordic Semiconductors. 
 It is part of the nRF52 series of microcontrollers intended for development.
-The nRF52840 DF is specialiezed for ble communication, for which it already includes the neccesary components.
-It is compatible with the nRF52 Software Development Kit (SDK), also developed by Nordic Semiconductors.
-The SDK makes it possible to use the ble functionalaties and to control the pins. It aslo includes implementations for a plethera of pin based protocols.
-It contains 58 pins, 48 of which are data-pins and manage the power suply for additional modules, which includes 3.5 and 5 Volt supply pins.
-32 of the pins are installed in the same way as the pins on the Ardruino uno, making it compatible with many peripherals that were designed with this common board in mind, such as the dwm3000.
-The remaining ten pins are enough to attach the sensors to.
-The nRF52840 DK includes a USB-B port that is used for Powersuply. Additionally it is connected to two pins and is used for UART-communication and for debugging.
-The nRF52 was chosen since it was avaliable and previous projects have been done with it in compination with the DWM3000 shield.
-As a result a lot of initial setup was already avaliable.
+The nRF52840 DF is specialized for BLE communication, for which it already includes the necessary components.
+It is compatible with the nRF52 Software Development Kit (SDK) developed by Nordic Semiconductors.
+The SDK makes it possible to use the ble functionalities and to control the pins. 
+It also includes implementations for a plethora of pin-based protocols.
+It contains 58 pins, 48 of which are data pins, and 10 manage the power supply for additional modules, which include 3.5 and 5 Volt supply pins.
+Thirty-two of the pins are installed the same way as the pins on the Arduino uno, making it compatible with many peripherals designed with this common board in mind, such as the dwm3000.
+The remaining ten pins are enough to attach the sensors.
+The nRF52840 DK includes a USB-B port that is used for powersuply. Additionally, the USB-B port is connected to two pins and is used for UART communication and debugging.
+The nRF52 was chosen since it was available, and previous projects have been done with it in combination with the DWM3000 shield.
+As a result, a lot of initial setup was already available.
 
 \subsection{UWB shield}
-For communication between the tags as well as distance measurement the DWM3000 UWB-shield developed by Qorvo was chosen.
+For communication between the tags and distance measurement, the DWM3000 UWB shield developed by Qorvo was chosen.
 The DWM3000 is a commonly used device for research involving UWB \cite{coppens2022overview, leu2022ghost, stocker2022performance}.
-It allows low level access, but includes an SDK written in C that makes a lot of the processes transparent to the user, if they wish.
+It allows low-level access but includes an SDK written in C that makes many processes transparent to the user if they wish.
 The SDK uses the Serial Peripheral Interface (SPI) for communication between the shield and the microcontroler.
 
 
@@ -41,41 +42,38 @@ The SDK uses the Serial Peripheral Interface (SPI) for communication between the
 \subsection{Humidity and temperature sensor}
 
 For humidity and temperature sensors I decided to use the DHT22(AM2302) produced by Guangzhou Aosong Electronic Co. \cite{AM2302}. 
-It is a comonly used sensor in IoT monitoring systems \cite{ahmad2021evaluation}. 
+It is a commonly used sensor in IoT monitoring systems \cite{ahmad2021evaluation}. 
 The vendor claims a temperature range from -40\degree to 80\degree Celsius with a precision of 0.5\degree. 
-\cite{ahmad2021evaluation} could experimentaly confirm that errors did not exceed 0.1\degree Celsius. 
-They also concluded that the sensor is slow in detecting temperature change. 
-This is also confrimed by the user manual \cite{AM2302}, that states a read-interval of less than 2s is not possible. 
+\cite{ahmad2021evaluation} could experimentally confirm that errors did not exceed 0.1\degree Celsius. 
+They also concluded that the sensor is slow in detecting temperature changes. 
+This is also confirmed by the user manual \cite{AM2302}, which states that a read-interval of less than 2s is impossible. 
 
-The humidity sensor can detect the full range from 0\% to 99.9\% humidity, with an advertised maximum error of 2 percent-points \cite{AM2302}.
-I could not find any research that confirmed or denied these claims.
+The humidity sensor can detect the full range from 0\% to 99.9\% humidity, with an advertised maximum error of 2 \% pts \cite{AM2302}.
+No research confirming or denieing these claims could be found.
 
-The DHT22 sensor uses three pins from the microcontroler, two pins for power suply and ground and one for single-bus communication.
-Since no SDK for this type of communication has been build for the nRF52 board series, it had to be implemented manually by reading the high and low voltage on the communication pin and, detecting headers and footers and parsing the binary messages. 
-Dmitry Sysoletin published a project on github (\url{https://github.com/DSysoletin/nRF52_DHT11_example}) that handles the communication between an nRF52840 and a DHT11 sensor. 
-Since the communications is mostly the same, I used his implementation, but changed the parsing of the actual data to fit the encoding used by the DHT22.
+The DHT22 sensor uses three pins from the microcontroller: two pins for power supply and ground and one for single-bus communication.
+Since no SDK for this type of communication has been built for the nRF52 board series, it had to be implemented manually by reading the high and low voltage on the communication pin, detecting headers and footers, and parsing the binary messages. 
 
 \subsection{Accelerometer and Gyroscope}
 The MPU6050 sensor produced by InvenSense Incorporated provides accelerometer and gyroscope data.
 The accelerometer reports the acceleration in the three cardinal directions in meters per second.
-The Gyroscope reports the rotation around the threee euclidean axis in degrees per second.
-In this project the accelermoterdata was not used, just the gyroscope.
+The gyroscope reports the rotation around the three Euclidean axes in degrees per second.
+In this project, the accelerometer data was not used, only the gyroscope.
 
-The MPU6050 uses 4 pins, two for power suply and ground and two communication.
-The Sensor communicates using the I2C protocoll, a serial synchronus communication system.
-The microcontroller acts as the master and would in theory suport multiple workers on the same bus. 
-Here only the MPU6050 uses I2C and is therefore the only worker.
-While the nRF52 SDK does not supply a I2C API, it offers a Two Wire Interface (TWI) implementation that is compatible with the I2C protocoll.
-It even used to offer MPU6050 specific support in the older SDK. 
-I was able to port this older code to the current SDK.
+The MPU6050 uses four pins: two for power supply and ground and two for communication.
+The sensor communicates using the I2C protocol, a serial synchronous communication system.
+The microcontroller acts as the master and would, in theory, support multiple workers on the same bus. 
+Here, only the MPU6050 uses I2C and is the only worker.
+While the nRF52 SDK does not supply an I2C API, it offers a Two Wire Interface (TWI) implementation compatible with the I2C protocol.
+It used to offer MPU6050-specific support in older versions of the SDK. 
 
 \subsection{Tag technical plan}
-The microcontroller builds the base of the Artwork-Tag. 
+The microcontroller builds the base of the tag. 
 The other devices are attached to it over the available pins.
-In the nRF52 SDK each data pin is assigned an integer value. 
-These often correspond with the name of the pin according to the nRF52830 DK manual, but not always.
-I will use the names given in the manual to describe the pins.
-Pins are the method by which a microcontroller controls its peripheras.
+In the nRF52 SDK, each data pin is assigned an integer value. 
+These often correspond with the pin's name according to the nRF52830 DK manual, but not always.
+This Thesis will use the names in the manual to describe the pins.
+Pins are the method by which a microcontroller controls its peripherals.
 
 
 \begin{table}[ht!]
@@ -168,149 +166,153 @@ Pins are the method by which a microcontroller controls its peripheras.
 \end{table}
 
 Some pins are intended for power supply.
-On the NRF52840 these pins are located in section P1, see table \ref{table:ArdruinoPins}.
+On the NRF52840, these pins are located in section P1; see table \ref{table:ArdruinoPins}.
 The three VDD pins supply electricity with a Voltage of 3.5 Volts.
 A secondary power supply that uses 5 Volts is also available.
 What voltage is needed depends on the peripheral.
 In this case, the DHT22 runs on 3.5 Volts, while the MPU6050 is made for 5 Volts.
-The P1 section also contains two ground pins, that need to be connected to the peripherals and a reset pin, to restart the microcontroller.
+The P1 section also contains two ground pins that need to be connected to the peripherals and a reset pin to restart the microcontroller.
 The last pin is not connected (N.C.).
 There are additional ground pins in sections P4 and P24 of the board.
 
 The other pins are called data pins.
-By using voltage modulation these pins can transfer data and therefore be used for communication.
-The nRF52840 has a I/O voltage of 3.3 Volt.
+These pins can transfer data and be used for communication by using voltage modulation.
+The nRF52840 has an I/O voltage of 3.3 Volt.
 This means that a voltage of 3.3 Volt corresponds to a \textit{Logic high} and 0 Volts represents a \textit{Logic low}.
 This allows the data pin to transfer communication in a binary encoding.
 How a signal is interpreted is defined by the used communication protocol.
-The MPU6050 for example uses the I2C protocol and uses 2 datapins.
-This defines that one pin is used for a serial clock and the other pin transmits data.
-For the data transmission the protocol defines what a package looks like.
-This includes the start condition, the voltage characteristics that signal the beginning of a package, addressing, data encoding, acknowledgments and stop condition.
+The MPU6050, for example, uses the I2C protocol and uses two datapins.
+The protocol states that one pin is used for a serial clock, and the other pin transmits data.
+For the data transmission, the protocol defines what a package looks like.
+This includes the start condition, the voltage characteristics that signal the beginning of a package, addressing, data encoding, acknowledgments, and stop condition.
 
-The DHT22 sensor does not use a given communication-protocol.
-It uses one data-pin to report its sensor data.
-How that data is encoded to high and low voltage is specified in the user manual \cite{AM2302} and has to implemented manually.
+The DHT22 sensor does not use a given communication protocol.
+It uses one data point to report its sensor data.
+How that data is encoded to high and low voltage is specified in the user manual \cite{AM2302} and has to be implemented manually.
 
-The DWM3000 shield is mounted on the 32 pins meant for arduino one connections. 
-All pins are forwarded and can be used by other devices, in a common ardruino-stackable style.
-If they are data-pins they will share the data.
+The DWM3000 shield is mounted on the 32 pins for Arduino one connections. 
+All pins are forwarded and can be used by other devices in a common Arduino-stackable style.
+If they are data pins, they will share the data.
 Table \ref{table:ArdruinoPins} shows which devices use which pins.
-The only pin shared by multiple devices are power and ground pins.
+The only pins shared by multiple devices are power and ground pins.
 The microcontroller supplies enough power to support this.
 
-The sensors are attached to the same powersource and ground as the shield, but use different data-pins.
+The sensors are attached to the same power source and ground as the shield but use different data pins.
 The DWM3000 leaves enough pins unused that both sensors could be attached to them.
-Since it is not visible which pins the shield leaves free, I decided to use data-pins that are not attached to the DWM3000 in any way.
+Since it is not visible which pins the shield leaves free, it was decided to use data pins that are not attached to the DWM3000 for the DHT22 and MPU6050.
 Table \ref{table:otherPins} shows how the sensors are connected to the remaining open pins.
 
 \section{Architecture}
 \label{ss:dataflow}
 
-In order to discuss how the dataflow works, first the section \ref{ss:responsibility} will establish what services are implemented in each part of the system.
-The section \ref{ss:dataflow} will explain what triggers events and how they are handled inside the system.
+In order to discuss how the dataflow works, first, Section \ref{ss:responsibility} will establish what services are implemented in each part of the system.
+Section \ref{ss:dataflow} will explain what triggers events and how they are handled inside the system.
 
 \subsection{Responsibilities}
 \label{ss:responsibility}
-The system consists of the tags, the sensor network and the phone.
+The system consists of the tags, the sensor network, and the phone.
 These parts all have their own responsibilities.
 
 \textbf{Tag:} 
-The tag is responsible to manage its sensors. 
-It has to do correct setup and converts its output into a understanable form.
-The tag can performe ranging with all its neighbours.
-Additionaly the tags are responsible to search for networks to join, and react aprobiatly to network request, be those queries for sensor data, ranging requests or network managment jobs. 
-The tags provide a unique, secure universal identifier, to be used by queries or the network.
-How this is done is part of the certify project and will not be discussed in this thesis.
-The tag is also responsible for its own power managment.
+The tag is responsible for managing its sensors. 
+It has to do the correct setup and convert its output into an understandable form.
+The tag can perform ranging with all its neighbors.
+Additionally, the tags are responsible for searching for networks to join and reacting appropriately to network requests, be those queries for sensor data, ranging requests, or network management jobs. 
+The tags provide a unique, secure universal identifier to be used by queries or the network.
+How this is done is part of the certified project and will not be discussed in this thesis.
+The tag is also responsible for its own power management.
 This is not the focus of this thesis and will only be mentioned when relevant.
-A guideline on powermanagment will not be provided here.
+A guideline on power management will not be provided here.
 
-\textbf{Network:} The network is responsible to keep track of all tags taking part in the network. 
+\textbf{Network:} The network is responsible for keeping track of all tags taking part in the network. 
 It offers a joining protocol for new devices and remains stable when devices leave or become unavaliable. 
 It offers the possibility for phones to connect to the network. 
 It ensures quieries from phones get transported to the correct tag and the answers to the correct phone.
 It ensures a network topology that corresponds to a graph that is at least 3-connected.
-On request it returns a list of connected devices to the phone.
+On request, it returns a list of devices connected to the phone.
 
 \textbf{Phone:} The phone connects to the network via the provided method.
-It offers a graphical user interface (GUI) to be used by the driver.
+It offers a graphical user interface (GUI) for the driver to use.
 The GUI offers a method for the driver to set the acceptable ranges for all sensor data.
-Additionaly it offers a method to set query intervals-length.
-The phone is responsible to query sensor data for each tag and masurement once in each interval.
+Additionally, it offers a method to set query interval-length.
+The phone is responsible for querying sensor data for each tag and measuring once at each interval.
 The phone has to evaluate the answer.
 The phone has to report the results to the driver using the GUI.
-If a parameter falls outside of the acceptable range for its type, the phone is responsible to alert the driver to this fact.
+If a parameter falls outside of the acceptable range for its type, the phone is responsible for alerting the driver to this fact.
 
-The certify project also plannes to collect the sensor data on remote servers using a 4G connection.
+The Certify project also plans to collect the sensor data on remote servers using a 4G connection.
 The plan is to equip each tag with antennas to allow it to send the data directly to the server itself.
 Since this is not a part of this thesis, the responsibility for the tag to do this was not added to a list.
 A known problem with this plan is, that a 4G connection is not always possible.
-Since small tags have very limited memory, the plan to store the sensor data on the tag is not pheasible.
+Since small tags have very limited memory, the plan to store the sensor data on the tag is not feasible.
 If the setup presented in this thesis is used, it would allow for the storage of the data on the phone, which has a much larger memory.
-This again was not added, since it is not part of this thesis.
+This, again, was not added since it is not part of this thesis.
+
 
 \subsection{Dataflow}
 \label{ss:dataflow}
 
 \begin{figure}[ht!]
 	\includegraphics[width=\linewidth]{graphics/schematics/obervation_loop.png}
-	\caption{Sequence diagram of setup and oberservation loop. Setup is performed once, oberservation loop repeats until stopped.}
+	\caption{Sequence diagram of setup and observation loop. Setup is performed once, and the observation loop repeats until it is stopped.}
 	\label{f:observation_loop}
 \end{figure}
 
-How a tag connects to the network is described in the section \ref{s:network}.
-Figure \ref{f:observation_loop} shows a sequece diagram ob the setup and main observation loop of the system.
-On the top the communicating parts are listed.
+Section \ref{s:network} describes how a tag connects to the network.
+Figure \ref{f:observation_loop} shows a sequence diagram of the setup and main observation loop of the system.
+At the top, the communicating parts are listed.
 \begin{itemize}
 	\item Human is the driver of the truck
 	\item Phone is the phone used by the Human
-	\item Network consists of all the tags that are used and the network they build.
-	\item Connected Tag is part of this network, but is listed seperatly. It represents the tag that is communicating to the phone
-	\item Tag j is also part of the Netowrk. It represents the tag that is queried during the observation loop
+	\item Network consists of all the used tags and the network they build.
+	\item Connected Tag is part of Network but is listed separately. It represents the tag that is communicating to the phone
+	\item Tag-j is also part of Network. It represents the tag that is queried during the observation loop
 \end{itemize}
-Phone and Human communicate by using a GUI. Phone and Connected Tag commuincate using BLE. Every communication inside the network happens using UWB. This includes the communication between the Connected Tag, the network and Tag j. \\
-When the phone wants to connect to the network, it looks for advertised BLE devices.
-It then displays the devices to the user and lets him pick one.
-The phone then pairs to the chosen tag, making it the connected tag and the phones connection to the network of tags.
-Once connected to the network, the phone will promt the human to enter the parameters.
+Phone and Human communicate by using a GUI. 
+Phone and Connected Tag communicate using BLE. 
+Every communication inside Network happens using UWB. This includes the communication between the Connected Tag, Network, and Tag-j. \\
+When Phone wants to connect to Network, it looks for advertised BLE devices.
+It then displays the devices to Human and lets them pick one.
+The phone then pairs with the chosen tag, making it the Connected Tag and Phone's connection to Network.
+Once connected to Network, Phone will prompt Human to enter the parameters.
 These consist of:
 \begin{itemize}
 	\item Upper and lower limit for sensor data, like temperature and humidity
 	\item Maximal displacement value for distance and gyro. These values represent the maximal difference in registered values that is allowed for positional measurements.
 	\item Time between measurements. This gives the time period that will pass between measurements for each device and measurement type.
 \end{itemize}
-Once the parameters chosen, the user can start the observation.\\
-Each iteration of the observation loop begins with a call to the network for a list of all tags currently in the network.
-Since the tag network is a dynamic sensor network, the tags in the network can theoretically change. 
-In practice this should onyl happen, when artwork is unloaded or if a tag becomes faulty.
-The request for the list is transmitted to the connected tag ober BLE, which than queries the network for all conected devices.
-The responde is returned to the Phone.
-The phone then starts a nested loop, iterating over the list of tags and the list of metrics caputred by the system.
-For each measurement and tag combination (i,j) the phone contacts the connected tag for the value, which in turn queries the network.
-Once the message has arrived at the tag j, tag j gets measurement i. In case of sensors this intails contacting the sensor and requesting a value.
-If metric i is a distance measurement, tag j will commence a two-way ranging operation over UWB with all its registered neighbours and will report the list of distances, together with the tag-adresses they correspond to.
-Metric i is then transported over the network back to the connected tag and finaly to the phone.
-The phone must then evaluate the retrieved data. \\
-During the evaluation process, the phone creates an evaluated measurement, and marks it as problematic or unproblematic.
+Once the parameters are chosen, Human can start the observation.\\
+Each iteration of the observation loop begins with a call to Network for a list of all tags currently in Network.
+Since the tag network is a dynamic sensor network, the tags in Network can theoretically change. 
+In practice, this should only happen when artwork is loaded/unloaded or a tag becomes faulty.
+The request for the list is transmitted to Connected Tag over BLE, which then queries Network for all connected devices.
+The response is returned to Phone.
+Phone then starts a nested loop, iterating over the list of tags and metrics captured by the system.
+For each measurement and tag combination (i,j) Pphone contacts Connected Tag for the value, which in turn queries Network.
+Once the message arrives at Tag-j, Tag-j gets measurement i. 
+In the case of sensors, this entails contacting the sensor and requesting a value.
+If metric i is a distance measurement, tag j will commence a two-way ranging operation over UWB with all its registered neighbors and will report the list of distances, together with the tag addresses they correspond to.
+Metric i is then transported over Network back to Connected Tag and finally to Phone.
+Phone must then evaluate the retrieved data. \\
+During the evaluation process, Phone creates an evaluated measurement and marks it as problematic or unproblematic.
 What the evaluation looks like depends on the metric.
 \begin{itemize}
-	\item For most metrics, like humidity and temperature, the evaluated measurement is equivalent to the received measurement. It is then checked, if the measurement falls into the aceptable measurement parameters, set by the human.
+	\item For most metrics, like humidity and temperature, the evaluated measurement is equivalent to the received measurement. It is then checked if the measurement falls into the acceptable measurement parameters set by Human.
 	If it does not, the evaluated value is marked as problematic.
-	\item Some metrics require comparisment to the previous data. The gyroscope reports the current orientation of the tag.
-	This is then compared to all previous measurements and the maximal angular difference forms the evaluated measurement.
-	If the evaluated metric is bigger then allowed by the set parameters, the measurement is marked as problematic
-	After evaluation the original measurement is added to the list of previous measurements.
-	\item The distance measurement has a unique evaluation process, which is describbed in section \ref{ss:distance_eval}.
+	\item Some metrics require comparison to the previous data. The gyroscope reports the current orientation of the tag.
+	This is then compared to all previous measurements, and the maximal angular difference forms the evaluated measurement.
+	If the evaluated metric is bigger than allowed by the set parameters, the measurement is marked as problematic
+	After evaluation, the original measurement is added to the list of previous measurements.
+	\item The distance measurement has a unique evaluation process, which is described in Section \ref{ss:distance_eval}.
 \end{itemize}
-Once the data evaluation is done, the evaluated measurement is presented to the user over the GUI, together with the adress of the tag it belongs to.
-If the evaluated measurement is problematic, the driver it alarmed.
+Once the data evaluation is done, the evaluated measurement is presented to the user over the GUI, together with the address of the tag it belongs to.
+If the evaluated measurement is problematic, the driver will be alarmed.
 
 
 \subsubsection{Distance evaluation}
 \label{ss:distance_eval}
 The goal of the distance evaluation is to build a working model of where every tag is.
-To achieve this, a quadratic program is solved, to get the coordinates of all tags.
+To achieve this, a quadratic program is solved to get the coordinates of all tags.
 The steps to do this are as follows:
 \begin{enumerate}
 	\item Get a list of all current tags, $T:=\{ t_1, t_2, ... \}$.
@@ -319,18 +321,18 @@ The steps to do this are as follows:
 	\item Assign each tag $t_i$ a position in a 3D coordinate system, $(x_i,y_i,z_i)$
 	\item Pick one random tag $t_{o}$.
 	\item Set the values $x_{o},y_{o},z_{o}$ all to 0.
-	\item Create the objective function: $L(X,Y,Z) = \sum\limits_{t_i, t_j, d_{ij} \in S_D}|(x_i-x_j)^2+(y_i-y_j)^2+(z_i-z_j)^2-d_{ij}^2|$. For x,y and z use variables for all but the six values set in step (6).
-	\item Solve the quadratic program consting of the Objective function L and no constrains.
+	\item Create the objective function: $L(X,Y,Z) = \sum\limits_{t_i, t_j, d_{ij} \in S_D}|(x_i-x_j)^2+(y_i-y_j)^2+(z_i-z_j)^2-d_{ij}^2|$. For x,y, and z, use variables for all but the six values set in step (6).
+	\item Solve the quadratic program consisting of the Objective function L, and no constraints.
 \end{enumerate}
-Quadratic Programs in general are NP-Hard, but Quadratic Programs with a convex function can be solved efficiently.
+Quadratic Programs, in general, are NP-Hard, but Quadratic Programs with a convex function can be solved efficiently.
 $(a-b)^2$ and $c$ are convex functions.
-The sum uf a convex function is always a convex function.
-The objective function in (7) only sums up convex functions and is therefore convex itself.
-The quadratic program can therefore be solved efficiently.\\
-By setting the values of tag $t_{o}$ to zero, the results of the quadratc function becomes grounded.
-It is not strictily nessecary, but without it the returned solution could have values anywhere in the Euclidean space.
-by setting one tag to the coordinates at theo origin, the solution will place the other tags near that region.
-There are still an infinte amount of solutions to this quadratic function, since all solutions can be roatated around any axis and still return the same objective function.
+The sum of a convex function is always a convex function.
+The objective function in (7) only sums up convex functions and is, therefore, convex.
+The quadratic program can, therefore, be solved efficiently.\\
+By setting the values of the tag $t_{o}$ to zero, the results of the quadratic function become grounded.
+It is not strictly necessary, but without it, the returned solution could have values anywhere in the Euclidean space.
+The solution will place the other tags near that region by setting one tag to the coordinates at the origin.
+There are still an infinite amount of solutions to this quadratic function since all solutions can be rotated around any axis and still return the same objective function.
 
 \begin{figure}[ht!]
 	\begin{subfigure}{.4\linewidth}
@@ -348,16 +350,16 @@ There are still an infinte amount of solutions to this quadratic function, since
 	\label{f:connected_dots}
 \end{figure}
 
-For a point to be clearly placed in Euclidean space, three distances to other points have to known.
-This alone is not sufficient to insure a unique results.
+For a point to be clearly placed in Euclidean space, three distances to other points must be known.
+This alone is not sufficient to ensure unique results.
 The left of Figure \ref{f:connected_dots} illustrates this point in two-dimensional space.
-Every circle is connected to two others, still the blue circles can move without the whole figure moving.
+Every circle is connected to two others, but the blue circles can still move without the whole figure moving.
 What is needed to keep every point static is for known distances and tags to build a four-connected graph (three in two dimensions).
-The left of Figure \ref{f:connected_dots} shows a sollution of the problem on the right by creating a three-connected subgraph.
+The left of Figure \ref{f:connected_dots} shows a solution to the problem on the right by creating a three-connected subgraph.
 
 Once the coordinates for all tags are found, they are compared to previous results.
-For each tag the phone calculate by how much it has moved.
-The evaluated measurment is the distance of the tag that has moved the most.
+For each tag, the phone calculates how much it has moved.
+The evaluated measurement is the distance of the tag that has moved the most.
 If the evaluated measurement is larger then the maximal allowed displacement, the measurement is problematic.
 
 
@@ -370,51 +372,51 @@ This means that for each tag pair $i,j$, one can either say that $rank(i)<rank(j
 To achieve this, the universal unique identifiers are used.
 No matter what form the UUID has, it can be converted to an integer, by simply interpreting its binary code as one.
 Since the UUIDs are unique, no to tags will have the same resulting integer.
-When refering to the rank of a tag in this section, the integer representing the UUID is intended.
+When referring to the rank of a tag in this section, the integer representing the UUID is intended.
 
-The tags inside the truck, while not connected to a phone, form a dicentralized mesh using UWB for communication.
-Each tag keeps two list, a list of known devices and a list of neighbours.
-When a new tag joins the network, it sends a joining request over UWB, containing its universal unique id (UUID), using a weak signal.
+While not connected to a phone, the tags inside the truck form a decentralized mesh using UWB for communication.
+Each tag keeps two lists: a list of known devices and a list of neighbors.
+When a new tag joins the network, it sends a joining request over UWB, containing its UUID, using a weak signal.
 All tags in the network that receive this request add the new device to their list if known devices. 
-If the new devices also has a heigher rank, they additionaly add it to their list of neighbours.
+If the new device also has a higher rank, they additionally add it to their list of neighbors.
 They then answer by sending their own UUID and adress back to the new tag.
-By waiting an amount of time that correlates with their UUID, the tags in the network can ensure, that their answers don't overlap.
-The new tag adds the received adresses and UUIDs to its known device list. If the rank of the added tag is also has a higher rank then the new tag, it will add it to the list of neighbours.
-If the new tag now has four neighbours, it stops. Otherwise it will repeat the process with a incresasingly stronger signal, until it has either found four tags with higher rank or reached maximum signal strength.
-Afterwards it starts addvertising its BLE connection.
+By waiting an amount of time that correlates with their UUID, the tags in the network can ensure that their answers don't overlap.
+The new tag adds the received addresses and UUIDs to its known device list. If the added tag's rank is also higher than the new tag, it will add it to the list of neighbors.
+If the new tag now has four neighbors, it stops. Otherwise, it will repeat the process with an increasingly stronger signal until it has either found four tags with a higher rank or reached maximum signal strength.
+Afterward, it starts advertising its BLE connection.
 This concludes the network joining process.
 
 
-A user with a phone can connect to any of the advertised BLE connection.
-Once that happens, the tags in the tracks will switch from their dicentralized mesh to a star-topology, with the connected device serving as the coordinator.
-The coordinator will inform all tags about its new status, by sending a message using a strong UWB signal.
+A user with a phone can connect to any of the advertised BLE connections.
+Once that happens, the tags in the tracks will switch from their decentralized mesh to a star topology, with the connected device serving as the coordinator.
+The coordinator will inform all tags about their new status by sending a message using a strong UWB signal.
 The tags will then acknowledge this message in order of rank.
-The tags in the network will still keep their stored neighbours and known devices.
+The tags in the network will still keep their stored neighbors and known devices.
 The coordinator records a list of all acknowledgemtns, thus creating a list of all devices in the network.
 
 
 The phone can request the list of all tags from the coordinator.
-The phone can now also query the tags in the truck by sending the query to the coordinator over BLE, which then will pass it directly to the apropriate tag using BLE.
-For all sensor data, this is a simple call and response request. \\
-If a distance measurement is queried, the tags takes the following steps:
+The phone can now also query the tags in the truck by sending the query to the coordinator over BLE, which then will pass it directly to the appropriate tag using BLE.
+For all sensor data, this is a simple call-and-response request. \\
+If a distance measurement is queried, a tag take the following steps:
 \begin{itemize}
-	\item It conducts a UWB two-way ranging session with each tag in the neighbour list.
+	\item It conducts a UWB two-way ranging session with each tag in the neighbor list.
 	\item It reports those results to the coordinator tag.
 	\item It orders all received distances.
-	\item It keeps the tags with the four lowest distances and deletes the rest from the neighbour list.
+	\item It keeps the tags with the four lowest distances and deletes the rest from the neighbor list.
 \end{itemize}
-The first time a distance is requested, the tag will perform more ranging sessions then necesary to build a 4-connected graph.
-Afterwards it only perform ranging with four other tags, unless a new device was added.
-If a ranging session does not report a result, because a tag left or became unavaliable, the tag adds ads the tag with the shortest previously measured distance and higher rank from the list of known devices back intro the list of neighbours.
+The first time a distance is requested, the tag will perform more ranging sessions than necessary to build a 4-connected graph.
+Afterward, it only performs ranging with four other tags unless a new device is added.
+Suppose a ranging session does not report a result because a tag left or became unavailable. In that case, the tag adds ads the tag with the shortest previously measured distance and higher rank from the list of known devices back intro the list of neighbours.
 
 
-This design mirrors the algorithm proposed by \cite[khan2007simple] and presented in section \ref{ss:k_connected_explained}.
-It creates an approximation of a minimaly weighted k-connected subgraph, based on the measured distances.
-This is allowed, since the distances are in euclydean space, which when mapped to a graph forms a metric graph.
+This design mirrors the algorithm proposed by \cite[khan2007simple] and presented in Section \ref{ss:k_connected_explained}.
+It creates an approximation of a minimally weighted k-connected subgraph based on the measured distances.
+This is allowed since the distances are in Euclydean space, which, when mapped to a graph, forms a metric graph.
 As discussed in section \label{ss:distance_eval}, a four-connected graph is needed to uniquly identify the position of each tag.
-The graph should be minimaly weighted, so that measurements are between tags that are as close as possible to each other.
+The graph should be minimally weighted so that measurements are between tags that are as close as possible to each other.
 This reduces the multipath effect and theirfore increases precision.
 
 
-If the tags are not connected to a phone and report their data to a remote server, they can still use the same distance-measurement, to approximate the k-connected subgraph.
+If the tags are not connected to a phone and report their data to a remote server, they can still use the same distance measurement to approximate the k-connected subgraph.
 The quadratic program can then be calculated on the server.
