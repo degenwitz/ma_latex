@@ -1,27 +1,82 @@
 \chapter{Final Considerations}
 \label{chap:considerations}
 
-%Regarding Final Considerations:
-% I. Some teachers and/or methods use the term Conclusion for a text at the end of the paper that aims to expose the results achieved, this term is not incorrect, but many of the works are bibliographical reviews where in the end no conclusion is obtained and yes Several considerations that were found in the development of written work. Therefore, in each project should be considered/weighted if there will be a Conclusion or Final Considerations. Usually what else happens is that you have Final Considerations. The Final Considerations of a paper aims to show if the goal sought for the project was achieved, as well as give a view of the most important considerations and conclusions on the subject addressed, among other aspects. This should include:
-%1. An explanation stating clearly whether or not it has achieved the stated objectives (a subdivision between general objectives and specific objectives can also be made here). In each case the reasons must be explained:
-%The. If you have achieved the objectives: inform the main factors that contributed to the success, describing them briefly, but do not leave doubts;
-%B. If you have not met the objectives: inform how much of the objective has been achieved and cite the factors that contributed to the failure, describing them briefly, but that leaves no doubt.
-%2. Describe the main considerations and conclusions that were obtained as a result of the execution of the work. Here should not be repeated text already in the work, but write the impressions of these considerations and how they contributed to the implementation and achieved the goal;
-%3. Name and describe the main difficulties encountered in the execution of the work and project. All the work developed means an evolution for the student, and to reach this evolution, it has had to overcome a series of obstacles. Reporting obstacles and overcoming (or not overcoming) helps to dignify and show the merit of the work itself to the reader/evaluator. It is also a contribution, in the sense that once problems and solutions are exposed, readers/evaluators learn/know ways of solving or approaching such problems;
-%4. Discuss whether modifications occurred during the execution of the work within the scope defined in the Project phase and in what was developed. It should be explained what generated those modifications, substantiating and justifying such changes.
-%5. The relationship between the proposed schedule and the work schedule can be described. This allows the reader/evaluator to learn from the indicated distortions/hits.
-%6. Describe or cite future work that may be done based on this work. During the execution of work, it is sought to reach a defined objective in the project. However, several interesting subjects of research are revealed (being that the same ones are not treated/researched in the work because they do not match the objective and scope of the work). The description of such subjects/themes/research demonstrates the students' perception of development as well as their vision of objectivity in the execution of this work.
-
-%II. Conclusion / Final Considerations aim to show the reader/evaluator the student's perception of the work done. In this way, it is not advisable to do citations and references because theoretically everything that was necessary to quote and refer should already be done within the content of the work. Only in some very specific cases/situations can you make referrals or citations in this part of the work (this should be discussed thoroughly with the supervisor/teacher).
-
-%III. Looking at the described items that should compose the Conclusion / Final Considerations, it is difficult to imagine that this part of the work has less than one page;
+This chapter provides a summary of this thesis \ref{s:sumary}, a conclusion of what was achieved \ref{s:Conclusion} and it lays out future work that could be build on this thesis \ref{s:future_work}.
+The goal of this is to provide a wrap-up of this thesis.
 
 \section{Summary}
+\label{s:sumary}
 
-% I did this in this way, that in that way... and so on
+This thesis introduced a design for a wireless sensor network (WSN) to monitor artworks during transportation and inform the driver about the status of his load.
+This involved the tag beeing equiped with temperature and humidity sensors and a gyroscope, as well as peripherals for UWB and BLE communications.
+The tags would build a peer to peer network using UWB, that a phone could connect to using BLE.
+The phone would run an app that queries the WSN for measurements and presents the result to the driver.
+Based on parameters provided by the driver, the app would warn the driver about measurements that indicate a problem.
+Next to sensor data, the provided system also included distance data between the tags, gathered by using UWB two-way ranging.
+The App builds a working model of the positions of the tags based on this data.
+
+
+In a first step, theoretical knowledge about relevant field was gathered.
+This thesis provides a sumary on the relevant parts in the fields of: Wireless sensory Networks, Ultra wideband, Two-Way ranging and k-connected graphs (TODO: Liste erweitern wenn mer dazu kommt!).
+Additionaly the current state of research in related fields was presented, consisting of: Artwork Tracking, sensor networks and wireless ranging.
+
+
+The system design includes a description of the hardware used, including a breakdown of the tag components. It descirbes the way all hardware components communicate with each other and how to connect them correctly.
+It then provides the architecture of the system, describing the different modules used and what theor individual services and responsibilities are.
+A detailed description of how data flows through the system was provided.
+Lastly the network architecture was provided, describing how tag join and communicate. The thsis showed how this implementation ensures, that a unique model of the tag positions in the system can be calculated, and how this model is calculated efficiently.
+
+
+The implementation followed the outlined system design, using a nRF52840 microcontroler, the DHT22 temperature and humidity sensor, the MPU6050 gyroscope, DWT3000 UWB shield and an Adnroid phone.
+The implementation descibes how each sensor was initiated and operated.
+It describes how the UWB network was build, how UWB two-way ranging was implemented and how a BLE connection is established.
+It shows how all parts of the system are coordinated and the steps needed to run them all on the same system.
+Lastly the process of developing the app and how it is operated by the user is described.
+
+
+The system was evaluated, by performing five experiments and evaluating the gathered results. 
+The first experiment tested a static system, with no changes to the tags. 
+The second introduced heat to one of the tags, testing if the workings of the heat and humidity sensors.
+The third tested the functionality of the gyroscope and involved turning one the the tags around itself after a period of rest.
+The fourth experiment tested the ranging capabilities of the tag and consistet of moving the tag around.
+The fith ecperiment checked how the system would behave outisde of the laboratory environment. The tags were taken on a journey that envolved walking and taking trains.
 
 \section{Conclusions}
+\label{s:Conclusion}
 
-% Lessons learned
+A comprehensive exploration of the current standing of sensory networks for the monitoring of artworks has been conducted, giving insight into the use of IoT devices and wireless sensory networks in this field.
+A design was presented that would allow for the tracking of artworks during transportation in a truck, using different sensors and distance measurements.
+The provided design was sucesfully implemented and tested.
+
+
+The testing showed that the developed system is capable of querying data from the tags and reporting it.
+The system can run for an extended amount of time unsuperwised and reports problematic data correctly to the user via phone.\\
+The results from temperature and humidity measurements showed, that these measurements are working in the systems as intended.
+The temperature data showed readings that were consistent with other devices and were consisten betwen the tags with up to one degree.
+The humidity readings were mostly consosten between the tags but differed from external sensors by a larger margin.\\
+The reading of the gyroscope had to be implemented two times.
+An atempt to track the current orientation of the tag using the gyroscope readings showed inconsistent data.
+Tracking the maximal angular velocity captured since the last measurement was fruitfull and provided usefull insights into the movement of the tag.\\
+The distance measurements showed readings that did not correspond to the distances in the physical world.
+Nethertheless, the readings were consistent and the difference in distance between event mirrored what happend en the event.
+The distance measurements are currently not precise enough to build a tag positioning systems, but they can be used to detect unwanted movement between the tags.
+
+
+Overall the design was sucesfull and shows that a artwork tracking system using these fundamentals could be used.
+The selection of the sensors that are most sutable for the system still needs to be developed.
+The distance measurement needs to be improved.
+These are both potental research topics for future work.
 
 \section{Future Work}
+\label{s:future_work}
+
+The implementation used in this thesis was intended as a proof of concept and therefore does not implement a fully functional art-tracking system.
+A focus was put on different types of sensors and how they would interact and report to the system.
+Therefore there the foxus was not on choosing the optimal sensors for an art-tracking system.
+Future work could focus on the types of sensors used and assure they are optimaly chosen to capture all aspects that are relevant during art-preservation.
+This research could include, but is not limited to:
+\begin{itemize}
+	\item The inclusion of a light-tracking sensor
+	\item Compare different humidity and temperature sensors.
+	\item Use gyroscopic data and ascelerometers to detect problematic vibration during travel, similar to \cite{landi2022iot}
+\end{itemize}

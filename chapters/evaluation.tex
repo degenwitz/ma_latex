@@ -19,9 +19,6 @@ The same four tags were used for all experiments.
 They will be refered to as Tag-1, Tag-2, Tag-3 and Tag-4.
 
 
-
-
-
 \section{Experiment 1: Static}
 \label{ss:exp_1}
 The four tags where placed on the corners of a 80 cm by 50 cm rectangle on a wooden table.
@@ -286,7 +283,7 @@ The table shows, that the variances are very low for all pairs, except 1=3.
 \end{table}
 
 
-\subsection{Conclusion}
+\subsection{Discussion}
 \label{s:exp1_conclustion}
 The temperature measurement seem to be working as excpected.
 All four tags show the same temperature, within a small margin of error.
@@ -437,7 +434,7 @@ This two lines have a similar tragectory, but are not parallel.
 While the difference in registerd humidity originaly is around 4.6\% pts, when both platoe, the difference has risten to 7.8\% pts.
 The variance in the difference of the Tag-2 sensor and the external sensor is 2.1 \% pts over the whole measurement period.
 
-\subsection{Conclusion}
+\subsection{Discussion}
 The fact that the three sensors that are far away from the sensor don't show any sign of temperature increase was expected.
 Since warm air rises, and the tags were spread more than half a meter apart, it was not expected, that the heat from the candles would reach the tags.
 Even if hot air would nor rise, the energy added to the system would  be added with an efficiency of $\mathbf{O}(d^{\frac{1}{3}})$, where d is the distance.\\
@@ -648,7 +645,7 @@ Distance measurements from Tag-3 to Tag-4 have a variance of 0.074m, while measu
 	\label{f:exp4_graphs_dist_split_3_4}
 \end{figure}
 
-\subsection{Colclusion}
+\subsection{Discussion}
 \label{s:exp_3_conclusion}
 The orientational read of the gyroscope produces puzzeling rezluts.
 Many values are zero for most of the time, but not consistently.
@@ -817,7 +814,7 @@ Their is also a small increase in the distance between tags 2 and 3, but which s
 \label{tab:exp4_mean_distances}
 \end{table}
 
-\subsection{Conclusion}
+\subsection{Discussion}
 \label{s:exp_4_conclusion}
 As was shown in Experiment 1, the distances do not match with the phsiscal distances.
 However, the differences in distance materialize correctly.
@@ -832,7 +829,7 @@ For now this error is still too large to be used unmodified in real world applic
 \label{s:exp_5_real_world}
 Experiment 5 was designed to check, how the setup would do in a real world applicaion.
 For this, all tags were put in a rucksack and taken on a journey.
-To protect the electronics from damage, each tag was put in a transparent cylindrical plastic bucket with radiu 012m and a hight of 0.14m and no lid.
+To protect the electronics from damage, each tag was put in a transparent cylindrical plastic bucket with a diamater of 0.12m and a hight of 0.14m and no lid.
 The buckets in the rucksack were stacked so there were two next to each other at the bottom and two on top.\\
 First, the rucksack was taken by foot from Binzmmühlstrasse 14 by foot to the Zurich Oerlokon train staiton.
 From their the journey continued via train to Zurich Main Station.
@@ -871,10 +868,248 @@ Tag-2 and Tag-3 report similar values during the Main Station and keep having si
 Tag-4 reports values that are close to Tag-2 and Tag-3, but alwys below it. This becomes specialy pronounced at the main station, where Tag-4 measures 20.5\degree , 0.6 \degree lower than Tag-2 and 0.7 \degree lower than Tag-3.
 
 
-
-
 \begin{figure}[ht!]
 	\includegraphics[width=\linewidth]{graphics/exp/exp6_hum_plot_2.png}
 	\caption{Humidity over time during experiment 5.}
 	\label{f:ex5_train_hum}
 \end{figure}
+
+Figure \ref{f:ex5_train_hum} shows the humidity over time during the experiment.
+All tags start with a humidity measurement between and 37.0\% and 39.5 \%.
+The humdity then drops until the trainride and starts increasing again at the main station.
+On average it keeps increasing until the Lenzburg station is reached, except for Tag-3, which has a small drop during the first measurement in the train. \\
+Tag-2 consistently reported the lowest humidity, beein at one point 4\% lower than every other tag.
+Tag-1 for the most part has the highest Humidity, only once during the train ride recording a lower value then Tag-3.
+Tag-3 and Tag-4 have very similar values, until the second trin is reached.
+From there, Tag-3 starts recording higher humidity than Tag-4, ending with a difference of 2.1 \% .
+
+
+\begin{figure}[ht!]
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_gyro_data_x_split_2.png}
+	\caption{Gyroscope results using angular velocity reading over time during experiment 5.}
+	\label{f:ex5_train_gyro_x}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=100px]{graphics/schematics/gyro_walking.pdf}
+	\caption{Direction of the axes of the gyroscope during experiment 5.}
+	\label{f:ex5_train_gyro_y}
+\end{figure}
+
+
+\begin{figure}[ht!]
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_gyro_data_y_split_2.png}
+	\caption{Gyroscope results using angular velocity reading over time during experiment 5.}
+	\label{f:ex5_train_gyro_y}
+\end{figure}
+
+Figures \ref{f:ex5_train_gyro_x}, \ref{f:ex5_train_gyro_y}, \ref{f:ex5_train_gyro_z} shows the measurement from the gyro module for the axes X, Y and Z.
+Angular velocoty reading was used during ths experiment.
+A log scale is used, to account for the wide range of measurements.
+Figure \ref{f:exp6_gyro_coord} shows a schemativ view of the direction of the Axes.
+Axis Z was pointed in the walking direction, Axis Y upward and Axis X towards the side.\\
+Tag-2 has a missing gyro read. Tag-4 is also missing a value for the Z-Axis during the last measurement. These are the only example in all experiments, were values are missing.\\
+On all three axes Tag-1 has a comparativly very low starting measurement and then starts, before having similar values to the other tags.
+On all Axes the starting measurements are the highest of the whole graph, if one takes the second measurement for Tag-1. \\
+While the walk continues, the values on axis X and Y begin to decline, reaching a local minimum during the second measurement of the train-ride.
+The measurements taken in the central station are increasing again, reaching a local maxmima with the first reading during the second train-ride.
+The measurements two and three in the second trainride are lower than all other measurements for all tags.
+Afterwards the measurement increase again for Tag-1, Tag-2 and Tag-3.
+Tag-4 has notably low rotational values at the end of the experiment, the last measrement around the Y axis even beeing the second lowest value to be recorded during the hole experiment.
+
+
+\begin{figure}[ht!]
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_gyro_data_z_split_2.png}
+	\caption{Gyroscope results using angular velocity reading over time during experiment 5.}
+	\label{f:ex5_train_gyro_z}
+\end{figure}
+
+On the Z axis, Tag-2 has a second, even higher measured rotational velocity then the first one as its second measurement.
+The measurents of Tag-1, Tag-2 and Tag-3 for the Z-axis drop a lot faster then for the X and Y axis.
+For Tag-3 and Tag-4, the roatational velocoties also staed comparably steady between the entry of the end of the walk, the trainride and the main station and the beginning of the second train tide.
+The measurements take another noticable dip during the second and third measurement in the train, and the going back up with the last measurement.
+
+
+\begin{figure}[ht!]
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_1_2_split.png}
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_1_3_split.png}
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_1_4_split.png}
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_2_3_split.png}
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_2_4_split.png}
+	\includegraphics[width=\linewidth]{graphics/exp/exp6_dist_data_plot_2_3_4_split.png}
+	\caption{Experiment 5, distance over time, for all pairs i=j.}
+	\label{f:exp5_graphs_dist_split}
+\end{figure}
+
+Figure \ref{f:exp5_graphs_dist_split} shows the pair of distance measurements that descibe the same distance.
+As in the other experiments, the measurement pairs measure the same values.
+An expetion is the last measurements of Tag-1 measuring the distance to Tag-2. it is 65.5m, which is more than 100 times the value of the next highest measurement.
+Table \ref{tab:exp5_var_distanc} shows the mean values and variance for the distance pairs.
+The variance of 1=2 is 235.
+This is mostl because of the extreme last measrement, but without it the variance would still be 0.025m.
+All other variances are very low, with distance 2=3 having the highest variance with 0.010m.\\
+The mean value of distance 1=2 is 0.317m, if the large value at the end is ignored. This makes it still the largest, the others all beeing in the range of 0.09m and 0.18m.
+The lowest possible distance inside the rucksack would be two buckets were standing next to each other. This would lead to a distance of 0.12m.
+The highest possible distance is the distance between tow buckets diagonaly from each other, which would be 0.18m.
+Distances 1=3, 1=4 and 2=3 are possible, the others descibe impossible distances in this scenario.\\
+As shown by the low variances, most distances remain static during the whole experiment. The only exception beeing 1=2.
+The first two measurements between Tag-1 and Tag-2 are very small, 0.075m and 0.042m. it then increases to 0.3m, where it stayes until the second train.
+During the second train it increases again to around 0.55m.
+The last two measurement are the impossibly high one of 2-1 and a drop back down to 3m by 1-2.
+
+
+\begin{table}[ht]
+\centering
+\caption{Statistics of the combined distance measurements between tags for experiment 5}
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tabular}{|c|c c c|}
+\hline
+		& \textbf{Tag-2} & \textbf{Tag-3} & \textbf{Tag-4} \\
+\hline
+\textbf{Tag-1}   & 3.93 & 0.174 & 0.141 \\
+\textbf{Tag-2}   &  & 0.153 & 0.231 \\
+\textbf{Tag-3}   &  &  & 0.094 \\
+\hline
+\end{tabular}
+\caption*{Mean}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tabular}{|c|c c c|}
+\hline
+		& \textbf{Tag-2} & \textbf{Tag-3} & \textbf{Tag-4} \\
+\hline
+\textbf{Tag-1}   & 235 & 0.003 & 0.001 \\
+\textbf{Tag-2}   &  & 0.001 & 0.010 \\
+\textbf{Tag-3}   &  &  & 0.001 \\
+\hline
+\end{tabular}
+\caption*{Variance}
+\end{minipage}
+\label{tab:exp5_var_distanc}
+\end{table}
+
+\subsection{Discussion}
+\label{ss:exp6_conclusion}
+Experiment 6 shows the acumulation of results that were seen before.
+Most results can be explained by chronologically going frew the events of the journey.
+
+
+After the experiment was setup, the rucksack was shoulder and a building was left, walking towards the Zurich Oerlikon train station.\\
+The original warm temperature of the building can be seen in the results of the temperature measurements. 
+Sice warm air was caputed in the bag and the back of the person carying the bag also warmed the baf, it took a while for the air in the rucksack to cool down.
+The same goes for the higher humidity of the building, that set a higherstarting humidity than what was present outside. \\
+The shouldering of the rucksack can be seen in the high rotational speeds, captured by the gyroscope.
+A rotation arround axis Z would imply movement similar to a sommersault.
+Since the person performning the experiment was avoiding such acrobatic feats, the rotation around the Z axis never reached high values again.\\
+The initial increase in distance between Tag-1 and Tag-2 might also be explained by a initial movment of the tags while shouldering the bag.
+This is unlikely, since all other distances were unaffected and it is unlikely that a tag changed position in such a way, that it only affected one distance, though theoretically possible.\\
+Tag-1 is the first tag to be quieried for its gyroscopic values.
+The fact that the rotational speed of Tag-1 is so low at the beginning is probably because the measurement was taken before the rucksack was shouldered.
+This would also explain the high rotational speed captured in the next measurement, this now capturing the movment of putting on the rucksack.
+
+
+The walk to the train-station involved turing a lot of corners.
+These would turn up as roatations around the Y axis, which we can see in Figure \ref{f:ex5_train_gyro_y}.
+The gyroscope captures the maximal rotational velocity since the last measurement.
+As a consequence, the first measurement in the train is still high, from the walk to the trainstation.
+The second value then is lower, since standing in a train involves less rotation.
+Since the person who performed the experiment stood in the door section of the train and had to move out of the way of some people, there is stiall a higher gyroscope measurement captured in the train. \\
+The results around axis X capture movement that corresponds to leaning. This also happens while walking, so the results mirror the results from axis Y, but in a less pronounced way.
+
+
+The initial warmth from the building was starting to wear of during the train-ride.
+It is unclear if this is because of the fresh air entering frew the door at stations, or because the train was not heated a lot.
+While the temperature droped, there was not much exchange with the air around the bag. 
+The falling temperature increased the humidity in the bag, in a reverse effect of what was seen in experiment 2 \ref{ss:exp_2}.
+This continued during the time in the main-station, which is also not heated.
+
+At the main station, the person taking the experiment originaly took it slow and then suddendly had to rush to catch the next train.
+This explaines why the rotational speeds for X and Y are steady, but not to extreme and then peak on the first measurement in the train.
+This measurement again caputring the second part of the stay at the Central Station, which envoled rushing to the train.
+
+
+Since the experiment was done during roush hour, the train was quite full and no seat was found.
+The carrier of the rucksack had to stand togehter with many other people until reaching Lenzburg. This was different than the S6 to the main station, which was surplisingly not that full.\\
+This is seen in the temperature graph.
+Many people standing close together will produce a lot of heat, that was enventualy increasing the temperature inside the bag.\\
+One can also see the lack of movement during this time in the gyroscope data.
+The rotational velocity is the lowest it has been during all of the experiment, since this is the first occurens ot the rucksack carrier actually standing still.
+
+When reaching the final destination, the train was left.
+This again involved a lot of turning and climbing down stairs, which can be seen in the increased roational speed, captured by the gyroscope.
+The experiment was ended shortly after leaving the train, not giving enough time for the temperature to drop again.
+
+Why Tag-4 captured lower temperature values is unclear.
+It is possible that the air around it was colder, due to an opening.
+But then one would also expect the temperature to ride faster in the crowded train at the end.
+Another explenation is a problem with the DHT22 sensor.
+The sensor did not have any problems since, so this explenation also seems unlikly.\\
+The difference between the other tags can be explained more easely.
+could have a higher inital heat for a varity of reasons.
+The building were the experiment was prepared had a bunch of runnign computers.
+If the bucket containing Tag-2 was near one of them, it would have been warmer than the other buckets.
+Tag-3was probably at a more exposed part of the bag. it react faster to the change in temperature than the other tags.
+
+
+It is unclear, why the humidity kept rising, while in the second train.
+Since the temperature was increasing, the expectation would have been for the humidity to drop.
+It is possible, that the humidity produced by many people standing close to each other would also affect the inside of the bag.
+How humidity behaves is not as obvious as temperature, so it is complicated to tell, if this is a problem for this experiment.\\
+The humidity during the static experiment was spread around a range of 2 \% pts, so the fact that a similar spread exists here seems to indicate, that this is how precice DHT22 is in sensing humidity.
+
+
+The missing values probably indicates, that a query has not reached the Tag.
+This was to be expected to happen sometimes and it is reasuring that it only happend two times over 15 experiments.
+It is also a good sign that the system can handle a missing measurement, without further issues.
+
+
+The constant and low values of the distance measurements show a realistic depicition of what happened inside the backpack, since the tags could not move much in there.
+The values again do not correspond to realistiv values, this probably beaning a consequence of the flawd calibration method used.\\
+There is no working theory of the measurements behaviour of the measurements 1=2.
+They do involve Tag-1 again, which is proune to faulty behaviour.
+But a mistake of 10000\% exeeds previous errors by a lot.
+The higher captured distances during the second train ride can also not be exaplined by beeing outliers, they are to consistent.
+A slight rearangement, inside the rucksack leading to an unfortuned multipath effect could explain this.
+
+Overall, experiment 5 shows, that the implemented system is sufficient for tracking during a real-world use.
+It is however noticable that it was designed for a system with fewer changing parameter, and fails to capture the samll details of a journey with changes that occur in a smaller than five minute time frame.
+
+\section{Challagnes and Limitations}
+\label{s:chalanges}
+
+The experiments showed that the two-way ranging implementation used does not provide precice results.
+A probable reason for this is the lack op propper calibration, using the method published by Qorvo \cite{DWM3000Calib}.
+This would envolve establishing a synchronized clock between the tags and building a star-topology network using UART USB connections with a central computer.
+Buildings this calibration systeam was out of scope for this thesis, but would have presumably improved distance measurement accuracy.
+
+
+Tag-1 frequently provided outliers in while ranging.
+In sensor networks it has to be expected that some evaluations are not wrong.
+The design presented in this thesis does not contain means to correct these readings, but rather relies on the driver to interpret them correctly.
+An alternative design could detect outlier readings on the phone by comparing to previous results.
+By using the data reported by the tags surrounding the tag with the outlier, the phone could determine the feasaility of the result and optionaly discard it based on the evaluation.
+Such a system would be enhanced if the positioning of the tags works, since it would allow for clearer results.
+It would also have to be calibrated quite carefully, since discarding a outlier that is reporting an actual problem would defeat the purpose of the system.
+But it would take a task away from the driver, who should not be overwhelmed with data while driving.
+
+
+The avaliability of only four tags for experiment limited the parts of the system that could be tested.
+Specifically the building of a working model of the position positions using a quadratic program was not possible using only four tags.
+For this reason this design aspect stayed theoretical for now.
+The implementation would require the network descibed in section \ref{c:design} to be used, including its network joining system.
+Additionaly, the app would need to be extended, to build and solve the quadratic program.
+The results would need to be graphicaly visualized and displayed to the user.
+
+
+No-one involved in this thesis owns a truck or is allowed to drive it in switzerland.
+The system was only tested in laboratory environments, walking and on a train, but never in a truck.
+It would be interesting to see how a experiment in a truck would differ from the experiments performed on the train.
+
+
+The experiment involving the train showed, that the gyroscope can sense small movements, when using the rotational velocity read.
+By including an accelerometer, a vibration detector could be developed, similar to the work done by \cite{khan2007simple}.
+This could lead to an additional measurement beeing captured by the system.

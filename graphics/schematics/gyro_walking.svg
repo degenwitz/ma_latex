@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="99 -10 235 305" xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw" version="1.1" baseProfile="full">
+    <g>
+        <g latexdraw:type="ellipse" id="id96749727">
+            <ellipse cx="269.5" cy="39.5" rx="25.5" ry="28.5" latexdraw:borderPos="outer" stroke="black" stroke-width="2.0" fill="none"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id230302554">
+            <polyline points="267.0,66.0 264.0,192.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id1717672569">
+            <polyline points="263.0,190.0 244.0,275.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id1528287236">
+            <polyline points="263.0,188.0 314.0,202.0 314.0,245.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="rectangle" id="id1150619135">
+            <rect x="224.0" y="89.0" width="39.0" height="61.0" latexdraw:borderPos="outer" stroke="black" stroke-width="2.0" fill="#e6994d"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id804969335">
+            <polyline points="265.0,73.0 250.0,138.0 253.0,136.0 293.0,154.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id2061054795">
+            <polyline points="138.0,120.0 210.0,118.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0" marker-end="url(#arrow1-2061054795)"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id362851553">
+            <polyline points="139.0,117.0 138.0,39.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0" marker-end="url(#arrow1-362851553)"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id1970652886">
+            <polyline points="137.0,118.0 119.0,155.0 " stroke="black" stroke-width="2.0" fill="none" latexdraw:rotationAngle="0.0" marker-end="url(#arrow1-1970652886)"/>
+        </g>
+        <g latexdraw:type="text" id="id173762735" fill="black" latexdraw:position="bl">
+            <text x="132.0" y="151.0">Z</text>
+        </g>
+        <g latexdraw:type="text" id="id272702680" fill="black" latexdraw:position="bl">
+            <text x="143.0" y="69.0">Y</text>
+        </g>
+        <g latexdraw:type="text" id="id157051901" fill="black" latexdraw:position="bl">
+            <text x="177.0" y="114.0">X</text>
+        </g>
+    </g>
+    <defs>
+        <marker overflow="visible" markerUnits="userSpaceOnUse" orient="358.409" id="arrow1-2061054795">
+            <path d="M 0.0 0.0 L -9.304166666666667 -3.322916666666667 L -9.304166666666667 0.0 L -9.304166666666667 3.322916666666667 z" fill="black" stroke="black" latexdraw:arrSizeNum="2" latexdraw:tbarSizeNum="5"/>
+        </marker>
+        <marker overflow="visible" markerUnits="userSpaceOnUse" orient="269.265" id="arrow1-362851553">
+            <path d="M 0.0 0.0 L -9.304166666666667 -3.322916666666667 L -9.304166666666667 0.0 L -9.304166666666667 3.322916666666667 z" fill="black" stroke="black" latexdraw:arrSizeNum="2" latexdraw:tbarSizeNum="5"/>
+        </marker>
+        <marker overflow="visible" markerUnits="userSpaceOnUse" orient="115.942" id="arrow1-1970652886">
+            <path d="M 0.0 0.0 L -9.304166666666667 -3.322916666666667 L -9.304166666666667 0.0 L -9.304166666666667 3.322916666666667 z" fill="black" stroke="black" latexdraw:arrSizeNum="2" latexdraw:tbarSizeNum="5"/>
+        </marker>
+    </defs>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:centreHoriz>false</latexdraw:centreHoriz>
+            <latexdraw:positionVert/>
+            <latexdraw:zoom>1.0</latexdraw:zoom>
+            <latexdraw:vpx>0.5</latexdraw:vpx>
+            <latexdraw:vpy>0.4</latexdraw:vpy>
+        </latexdraw:metadata>
+    </metadata>
+</svg>
